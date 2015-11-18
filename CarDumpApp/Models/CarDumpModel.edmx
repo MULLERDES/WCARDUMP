@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CarDumpDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AutoBrands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AutoModels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AutoBrandID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarDumps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AutoModelId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="MemoryTypeID" Type="int" Nullable="false" />
+          <Property Name="ModuleNumber" Type="nvarchar" MaxLength="350" />
+          <Property Name="FileURL" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemoryTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AutoModels_ToTable">
+          <End Role="AutoBrands" Type="Self.AutoBrands" Multiplicity="1" />
+          <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoBrands">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AutoModels">
+              <PropertyRef Name="AutoBrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToAutoModel">
+          <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="AutoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToMemoryType">
+          <End Role="MemoryTypes" Type="Self.MemoryTypes" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemoryTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="MemoryTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToModule">
+          <End Role="Modules" Type="Self.Modules" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CarDumpDatabaseModelContainer">
+          <EntitySet Name="AutoBrands" EntityType="Self.AutoBrands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AutoModels" EntityType="Self.AutoModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarDumps" EntityType="Self.CarDumps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemoryTypes" EntityType="Self.MemoryTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AutoModels_ToTable" Association="Self.FK_AutoModels_ToTable">
+            <End Role="AutoBrands" EntitySet="AutoBrands" />
+            <End Role="AutoModels" EntitySet="AutoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToAutoModel" Association="Self.FK_T_ToAutoModel">
+            <End Role="AutoModels" EntitySet="AutoModels" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToMemoryType" Association="Self.FK_T_ToMemoryType">
+            <End Role="MemoryTypes" EntitySet="MemoryTypes" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToModule" Association="Self.FK_T_ToModule">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarDumpDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AutoBrand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AutoModels" Relationship="Self.FK_AutoModels_ToTable" FromRole="AutoBrands" ToRole="AutoModels" />
+        </EntityType>
+        <EntityType Name="AutoModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AutoBrandID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AutoBrand" Relationship="Self.FK_AutoModels_ToTable" FromRole="AutoModels" ToRole="AutoBrands" />
+          <NavigationProperty Name="CarDumps" Relationship="Self.FK_T_ToAutoModel" FromRole="AutoModels" ToRole="CarDumps" />
+        </EntityType>
+        <EntityType Name="CarDump">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AutoModelId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="MemoryTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleNumber" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="FileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AutoModel" Relationship="Self.FK_T_ToAutoModel" FromRole="CarDumps" ToRole="AutoModels" />
+          <NavigationProperty Name="MemoryType" Relationship="Self.FK_T_ToMemoryType" FromRole="CarDumps" ToRole="MemoryTypes" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_T_ToModule" FromRole="CarDumps" ToRole="Modules" />
+        </EntityType>
+        <EntityType Name="MemoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarDumps" Relationship="Self.FK_T_ToMemoryType" FromRole="MemoryTypes" ToRole="CarDumps" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarDumps" Relationship="Self.FK_T_ToModule" FromRole="Modules" ToRole="CarDumps" />
+        </EntityType>
+        <Association Name="FK_AutoModels_ToTable">
+          <End Role="AutoBrands" Type="Self.AutoBrand" Multiplicity="1" />
+          <End Role="AutoModels" Type="Self.AutoModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoBrands">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AutoModels">
+              <PropertyRef Name="AutoBrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToAutoModel">
+          <End Role="AutoModels" Type="Self.AutoModel" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="AutoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToMemoryType">
+          <End Role="MemoryTypes" Type="Self.MemoryType" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemoryTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="MemoryTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ToModule">
+          <End Role="Modules" Type="Self.Module" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarDumpDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AutoBrands" EntityType="Self.AutoBrand" />
+          <EntitySet Name="AutoModels" EntityType="Self.AutoModel" />
+          <EntitySet Name="CarDumps" EntityType="Self.CarDump" />
+          <EntitySet Name="MemoryTypes" EntityType="Self.MemoryType" />
+          <EntitySet Name="Modules" EntityType="Self.Module" />
+          <AssociationSet Name="FK_AutoModels_ToTable" Association="Self.FK_AutoModels_ToTable">
+            <End Role="AutoBrands" EntitySet="AutoBrands" />
+            <End Role="AutoModels" EntitySet="AutoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToAutoModel" Association="Self.FK_T_ToAutoModel">
+            <End Role="AutoModels" EntitySet="AutoModels" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToMemoryType" Association="Self.FK_T_ToMemoryType">
+            <End Role="MemoryTypes" EntitySet="MemoryTypes" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ToModule" Association="Self.FK_T_ToModule">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CarDumpDatabaseModelContainer" CdmEntityContainer="CarDumpDatabaseEntities">
+          <EntitySetMapping Name="AutoBrands">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.AutoBrand">
+              <MappingFragment StoreEntitySet="AutoBrands">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AutoModels">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.AutoModel">
+              <MappingFragment StoreEntitySet="AutoModels">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AutoBrandID" ColumnName="AutoBrandID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarDumps">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDump">
+              <MappingFragment StoreEntitySet="CarDumps">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AutoModelId" ColumnName="AutoModelId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="MemoryTypeID" ColumnName="MemoryTypeID" />
+                <ScalarProperty Name="ModuleNumber" ColumnName="ModuleNumber" />
+                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemoryTypes">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.MemoryType">
+              <MappingFragment StoreEntitySet="MemoryTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.Module">
+              <MappingFragment StoreEntitySet="Modules">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

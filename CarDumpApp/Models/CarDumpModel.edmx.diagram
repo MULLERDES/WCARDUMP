@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c20cd4b367b94ae2a51370a5cf3bc1e1" Name="Diagram1">
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.AutoBrand" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.AutoModel" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.CarDump" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.MemoryType" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.Module" Width="1.5" PointX="7.125" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_AutoModels_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToAutoModel" ManuallyRouted="false" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToMemoryType" ManuallyRouted="false" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToModule" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

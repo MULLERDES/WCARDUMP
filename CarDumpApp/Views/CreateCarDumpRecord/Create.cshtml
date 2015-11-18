@@ -1,0 +1,141 @@
+﻿@model CarDumpApp.Models.CarDump
+<h2>Create</h2>
+
+@*@using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))*@
+<div id="sw">
+
+</div>
+
+@using(Ajax.BeginForm("Create", "CreateCarDumpRecord", new AjaxOptions { UpdateTargetId = "sw" }, new { id = "FORM1" }))
+{
+    <table>
+        <tr>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                марка авто
+            </td>
+            <td>
+
+
+                <div id="ddlist-autobrand">
+                    @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand");}
+
+                </div>
+
+
+
+            </td>
+            <td>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-AutobrandAdd">Добавить если нет марки</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Модель
+            </td>
+        </tr>
+        <tr>
+            <td>
+                год
+            </td>
+            <td>
+                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Тип модуля
+            </td>
+            <td>
+                <div id="ddlist-module">
+                    @{ Html.RenderAction("DDListModule", "Module");}
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Тип памяти
+            </td>
+            <td>
+                <div id="ddlist-memorytype">
+                    @{ Html.RenderAction("DDListMemory", "MemoryType");}
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-memorytype">Добавить если нет </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Номер модуля
+            </td>
+            <td>
+                @Html.EditorFor(model => model.ModuleNumber, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Описание
+            </td>
+            <td>
+                @Html.TextAreaFor(model => model.Description, new { cols = 80, @rows = 10 })
+            </td>
+        </tr>
+        <tr>
+            <td>file</td>
+            <td><input type="file" /></td>
+        </tr>
+        <tr>
+            <td>Изображение 1</td>
+            <td><input type="file" /></td>
+        </tr>
+        <tr>
+            <td>Изображение 2</td>
+            <td><input type="file" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" form="FORM1" value="Кнопка добавить запись в таблицу" /></td>
+        </tr>
+    </table>
+}
+
+
+@{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
+@{Html.RenderAction("ModalWindow", "Module"); }
+@{Html.RenderAction("ModalWindow", "MemoryType"); }
+
+
+
+
+
+
+
+<div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $('#DDListAutoBrand').change(function () {
+                // получаем выбранный id
+                var id = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ModelsByBrand","CreateAutoBrand")/' + id,
+                    success: function (data) {
+
+                        // заменяем содержимое присланным частичным представлением
+                        $('#DDListAutoModel').replaceWith(data);
+                    }
+                });
+            });
+        })
+    </script>
+}

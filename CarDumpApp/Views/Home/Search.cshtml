@@ -1,0 +1,227 @@
+﻿@model CarDumpApp.Models.CarDumpSearchViewModel
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+<h3>Search files</h3>
+<div class="row hidden">
+    <div class="col-sm4">
+    </div>
+</div>
+<form method="get" id="">
+    <div class="form-inline">
+        <label class="control-label">Auto </label>
+        @Html.DropDownList("brandname", Model.AutoBrands as SelectList,
+                    htmlAttributes: new
+                    {
+                        @class = "form-control",
+                        onchange = "this.form.submit();"
+                    })
+        <label class="control-label">Model </label>
+        @Html.DropDownList("modelname", Model.Models as SelectList,
+                htmlAttributes: new
+                {
+                    @class = "form-control",
+                    onchange = "this.form.submit();"
+                })
+          </div>
+</form>
+<table class="table table-hover" style="margin-top:20px;">
+    <thead>
+        <tr style="background-color:#1a6358;color:#ffffff;">
+            <th>
+                <label class="control-label">Auto</label>
+            </th>
+            <th>
+                <label class="control-label">Model</label>
+            </th>
+            <th>
+                <label class="control-label">Year</label>
+            </th>
+            <th>
+                <label class="control-label">Module.Name</label>
+            </th>
+            <th>
+                <label class="control-label">MemoryType</label>
+            </th>
+            <th>
+                <label class="control-label">ModuleNumber</label>
+            </th>
+            <th>
+                <label class="control-label">Open</label>
+            </th>
+        </tr>
+    </thead>
+        @{
+            if(Model.CarDumps != null)
+            {
+                foreach(var item in Model.CarDumps)
+                {
+                    <tr>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.AutoModel.Name)
+                        </td>
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Module.Name)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.MemoryType.Name)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.ModuleNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        </td>
+
+                    </tr>
+                }
+            }
+        }
+</table>
+<div class="row">
+    <div class="col-sm-2">
+        <ul class="pager">
+            <li ><a style="color:#1a6358" href="#">Previous</a></li>
+            <li><a style="color:#1a6358" href="#">Next</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-2 col-md-offset-8 ">
+        <ul class="pagination pagination-sm">
+            <li><a style="color:#1a6358" href="#">1</a></li>
+            <li><a style="color:#1a6358" href="#">2</a></li>
+            <li><a style="color:#1a6358" href="#">3</a></li>
+            <li><a style="color:#1a6358" href="#">4</a></li>
+            <li><a style="color:#1a6358" href="#">5</a></li>
+        </ul>
+    </div>
+</div>
+
+@*@using(Ajax.BeginForm("SearchP", new AjaxOptions { UpdateTargetId = "rez" }))
+    {
+        @Html.DropDownList("brandname", Model.AutoBrands as SelectList,
+                        htmlAttributes: new { @class = "form-control" , onchange ="this.form.submit();" })
+
+
+    }
+     <div id="rez">
+        @Html.Partial("SearchP", Model.Models as SelectList)
+    </div>
+
+
+    <input type="submit" form="sf1"    value="Search ss" />*@
+
+
+
+<div id="myModal_register" class="modal fade" role="dialog">
+    <div style="width:450px; " class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="background-color:#1a6358;border-radius: 5px 5px  0 0 ;" class="modal-header">
+                <button style="color:white" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="color:white" class="modal-title">DumpBase</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h3>Registration</h3>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="Name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="phone number" placeholder="Enter phone number">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="Confirm Password">
+                        </div>
+                        <button type="submit" class="btn btn-default" style="background-color:#1a6358; color:white">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal_login" class="modal fade" role="dialog">
+    <div style="width:450px; " class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="background-color:#1a6358;border-radius: 5px 5px  0 0 ;" class="modal-header">
+                <button style="color:white" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="color:white" class="modal-title">DumpBase</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h3>Login</h3>
+                    <p>Please enter your email and password. Or Register if you don't have an account</p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"> Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-default" style="background-color:#1a6358; color:white">Go</button>
+                        <a style="color:#1a6358" href="#" data-toggle="modal" data-target="#myModal_restore">Forgot?</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="myModal_restore" class="modal fade" role="dialog">
+    <div style="width:450px; " class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="background-color:#1a6358;border-radius: 5px 5px  0 0 ;" class="modal-header">
+                <button style="color:white" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="color:white" class="modal-title">DumpBase</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h3> Password recovery</h3>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="Name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="phone number" placeholder="Enter phone number">
+                        </div>
+                       
+                        <button type="submit" class="btn btn-default" style="background-color:#1a6358; color:white">Restore</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

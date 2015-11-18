@@ -1,0 +1,203 @@
+﻿@model CarDumpApp.Models.CarDumpSearchViewModel
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Personal Area</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="~/Images/Home/photographer-30423_640.png" class="img-thumbnail" alt="user photo" width="200" height="120" />
+        </div>
+
+        <div class="col-sm-4">
+              <ul class="list-group">
+                    <li class="list-group-item"><span class="badge">Vasy Petrov</span> User name</li>
+                    <li class="list-group-item"><span class="badge">12.11.2015</span> Registration Date</li>
+                    <li class="list-group-item"><span class="badge">Vasy@gmail.com</span> Email</li>
+                    @*<li class="list-group-item">Change data (ссылка)</li>*@
+                </ul>
+            <button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal" data-target="#myModal_change_data">Change data </button>
+        </div>
+        <div class="col-sm-4">
+            <ul class="list-group">
+                <li class="list-group-item"><span class="badge">12</span> Your files</li>
+                <li class="list-group-item"><span class="badge">5</span> Download files</li>
+                <li class="list-group-item"><span class="badge">3</span>Balance </li>
+            </ul> 
+            <button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal">Add files</button>
+          
+        </div>
+    </div>
+</div>
+<hr />
+<div class="container">
+    <div class="row">
+         <form method="get" id="">
+                <div class="form-inline">
+                    <label class="control-label">Auto </label>
+                    @Html.DropDownList("brandname", Model.AutoBrands as SelectList,
+                    htmlAttributes: new
+                    {
+                        @class = "form-control",
+                        onchange = "this.form.submit();"
+                    })
+                    <label class="control-label">Model </label>
+                    @Html.DropDownList("modelname", Model.Models as SelectList,
+                htmlAttributes: new
+                {
+                    @class = "form-control",
+                    onchange = "this.form.submit();"
+                })
+                    <label class="control-label">Auto </label>
+                    @Html.DropDownList("brandname", Model.AutoBrands as SelectList,
+                    htmlAttributes: new
+                    {
+                        @class = "form-control",
+                        onchange = "this.form.submit();"
+                    })
+               
+                </div>
+            </form>
+    </div>
+</div>
+
+<style>
+     .cvet li.active a{
+        background-color:#1a6358;
+    }
+     .cvet .active a:hover{
+        background-color:#063932;
+    }
+</style>
+<div class="container">
+      <div class="row" style="margin-top:10px;">
+        <ul class="nav nav-pills cvet">
+            <li class="active"><a data-toggle="tab" href="#home">ALL</a></li>
+            <li><a data-toggle="pill" href="#menu1">OPEN</a></li>
+            <li><a data-toggle="pill" href="#menu2">SELL</a></li>
+            <li><a data-toggle="pill" href="#menu3">BOUGHT</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                @*<h4>Recently added</h4>*@
+                <table class="table table-hover" style="margin-top:20px;">
+                    <thead>
+                        <tr style="background-color:#1a6358;color:#ffffff;">
+                            <th>
+                                <label class="control-label">Auto</label>
+                            </th>
+                            <th>
+                                <label class="control-label">Model</label>
+                            </th>
+                            <th>
+                                <label class="control-label">Year</label>
+                            </th>
+                            <th>
+                                <label class="control-label">Module.Name</label>
+                            </th>
+                            <th>
+                                <label class="control-label">MemoryType</label>
+                            </th>
+                            <th>
+                                <label class="control-label">ModuleNumber</label>
+                            </th>
+                            <th>
+                                <label class="control-label">Open</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    @{
+                        if(Model.CarDumps != null)
+                        {
+                            foreach(var item in Model.CarDumps)
+                            {
+                                <tr>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
+                                    </td>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.AutoModel.Name)
+                                    </td>
+
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.Year)
+                                    </td>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.Module.Name)
+                                    </td>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.MemoryType.Name)
+                                    </td>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.ModuleNumber)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    }
+                </table>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h4>Open access</h4>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h4>For sell</h4>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+                <h4>Bought</h4>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal_change_data" class="modal fade" role="dialog">
+    <div style="width:450px; " class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="background-color:#1a6358;border-radius: 5px 5px  0 0 ;" class="modal-header">
+                <button style="color:white" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="color:white" class="modal-title">DumpBase</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h3>Change data</h3>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="Name" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="E-mail">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="phone number" placeholder="Phone number">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="Old password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="New password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pwd" placeholder="Repeat new password">
+                        </div>
+                        <button type="submit" class="btn btn-default" style="background-color:#1a6358; color:white">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
