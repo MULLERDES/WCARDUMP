@@ -4,42 +4,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-@Html.ActionLink("марки машин", "Index", "AutoBrandsAdmin", null, null);
-@Html.ActionLink("Модели машин", "Index", "AutoModelsAdmin", null, null);
-@Html.ActionLink("Типы блоколв", "Index", "ModulesAdmin", null, null);
-@Html.ActionLink("Типы памяти", "Index", "MemoryTypesAdmin", null, null);
-@Html.ActionLink("Добавление Записи В базу (основная кнопка)", "Create", "CreateCarDumpRecord", null, null);
+<h4></h4>
+<div style="margin-top:5px;" class="row">
+    <div class="col-sm-2">
+        <h4 style="color:#1a6358">Full access:<span class="glyphicon glyphicons-right-arrow"></span></h4>
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Brands", "Index", "AutoBrandsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Models", "Index", "AutoModelsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Modules", "Index", "ModulesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Типы памяти", "Index", "MemoryTypesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" });
+    </div>
+</div>
 
 
 <h2>Personal Area</h2>
 <div class="container">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <img src="~/Images/Home/photographer-30423_640.png" class="img-thumbnail" alt="user photo" width="200" height="120" />
         </div>
 
-        <div class="col-sm-4">
+    <div class="col-sm-4">
             <ul class="list-group">
                 <li class="list-group-item"><span class="badge">Vasy Petrov</span> User name</li>
                 <li class="list-group-item"><span class="badge">12.11.2015</span> Registration Date</li>
                 <li class="list-group-item"><span class="badge">Vasy@gmail.com</span> Email</li>
                 @*<li class="list-group-item">Change data (ссылка)</li>*@
             </ul>
-            <button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal" data-target="#myModal_change_data">Change data </button>
-        </div>
+            @Html.ActionLink("Change data","Index","Manage",null,new {@class="btn btn-primary btn-block", @style= "background-color:#1a6358; border-color:#1a6358" })
+    </div>
         <div class="col-sm-4">
             <ul class="list-group">
                 <li class="list-group-item"><span class="badge">12</span> Your files</li>
                 <li class="list-group-item"><span class="badge">5</span> Download files</li>
                 <li class="list-group-item"><span class="badge">3</span>Balance </li>
             </ul>
-            <button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal">Add files</button>
+            @*<button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal">Add files</button>*@
+            @Html.ActionLink("Add Files", "Create", "CreateCarDumpRecord", null, new  { @class="btn btn-primary btn-block  " , style = "background-color:#1a6358; border-color:#1a6358" });
 
         </div>
     </div>
 </div>
+
 <hr />
 <div class="container">
     <div class="row">

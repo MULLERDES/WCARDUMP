@@ -3,39 +3,28 @@
 
 @using(Ajax.BeginForm("ModalWindow", "CreateAutoBrand", new AjaxOptions { UpdateTargetId = "ddlist-autobrand" }, new { id="AddAutoForm" }))
 {
-
-
 <!-- Modal -->
 <div id="modal-AutobrandAdd" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add aut brand</h4>
+            <div style="background-color:#1a6358;border-radius: 5px 5px  0 0 ;" class="modal-header">
+                <button type="button" style="color:white" class="close" data-dismiss="modal">&times;</button>
+                     <h4 style="color:white" class="modal-title">Add Auto Brand</h4>
             </div>
+
             <div class="modal-body">
-              
-                    @Html.DropDownList("CurrenBrands", null, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.DropDownList("CurrenBrands", null, htmlAttributes: new { @class = "form-control" })*@
                     @Html.EditorFor(model => model.Name, "", new { htmlAttributes = new { @class = "form-control" } })
-                    
-                     
-
-
             </div>
-            <div class="modal-footer">
-                    <button type="submit" form="AddAutoForm" value="Submit" onclick="$('#modal-AutobrandAdd').modal('hide');">Subsssssmit</button>
-            </div>
+             <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-md" form="AddAutoForm" value="Submit" style="background-color:#1a6358;color:white;border-color:#1a6358 ;" onclick="$('#modal-AutobrandAdd').modal('hide');">Submit</button>
+             </div>
         </div>
-
     </div>
 </div>
  
 }
-
-
-
-
 
 @*@using(Html.BeginForm("ModalWindow", "CreateAutoBrand",FormMethod.Post))*@
