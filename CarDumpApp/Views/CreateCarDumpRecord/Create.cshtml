@@ -1,149 +1,248 @@
 ﻿@model CarDumpApp.Models.CarDump
-<h4>Create new </h4>
 
-@*@using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))*@
-<div id="sw">
 
-</div>
-
-@using(Ajax.BeginForm("Create", "CreateCarDumpRecord", new AjaxOptions { UpdateTargetId = "sw" }, new { id = "FORM1" }))
-{
+@{Html.RenderAction("FullMenu", "AdminPanel", null);}
  
 
- <div class="row">
-     <div class="col-sm-2">
-          <strong> Brand/Model</strong>
-          <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-AutobrandAdd">Добавить если нет</button>
-       </div>
-       <div class="col-sm-4">
-          <div id="ddlist-autobrand">
-              @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand");}
-          </div>
+<h4>Create new </h4>
+@Html.HiddenFor(model => model.Id)
+
+@*<div id="sw">
+
+</div>*@
+
+@*@using(Ajax.BeginForm("Create", "CreateCarDumpRecord", new AjaxOptions { UpdateTargetId = "sw" }, new { id = "FORM1" }))*@
+
+@using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-2">
+            <strong> Brand/Model</strong>
+            @*<button hidden type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-AutobrandAdd">Добавить если нет</button>*@
         </div>
-       <div class="col-sm-2">
-          <strong> ModuleType </strong>
-          <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
-       </div>
-       <div class="col-sm-4">
-           <div id="ddlist-module">
-              @{ Html.RenderAction("DDListModule", "Module");}
-          </div>
-      </div>
-</div>
-  <hr />
-
-<div class="row">
-    <div class="col-sm-2">
-       <strong> Year</strong> 
-    </div>
-    <div class="col-sm-4">
-        <div id="ddlist-autobrand">
-            @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-sm-4">
+            <div id="ddlist-autobrand">
+                @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand");}
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <strong> ModuleType </strong>
+            <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
+        </div>
+        <div class="col-sm-4">
+            <div id="ddlist-module">
+                @{ Html.RenderAction("DDListModule", "Module");}
+            </div>
         </div>
     </div>
-    <div class="col-sm-2">
-        <strong> MemoryType </strong>
-        <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-memorytype">Добавить если нет </button>
-    </div>
-    <div class="col-sm-4">
-        <div id="ddlist-memorytype">
-            @{ Html.RenderAction("DDListMemory", "MemoryType");}
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <strong> Year</strong>
         </div>
-    </div> 
-    
-</div>
-  <hr />
-
-<div class="row">
-    <div class="col-sm-2">
-    <strong> File </strong>
-        <select style="max-width:130px;  border-color:#1a6358" class="form-control" id="category" name="Category" @*onchange="this.form.submit();"*@>
-            <option >Category</option>
-            <option >Private</option>
-            <option >For sale</option>
-        </select>
-</div>
-<div class="col-sm-4">
-    <input type="file" />
-</div>
-    <div class="col-sm-2">
-       <strong> ModuleNumber</strong> 
-    </div>
-    <div class="col-sm-4">
-         <div id="ddlist-memorytype">
-            @Html.EditorFor(model => model.ModuleNumber, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-sm-4">
+            <div id="ddlist-autobrand">
+                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
         </div>
-    </div>  
- </div>
-  <hr />
+        <div class="col-sm-2">
+            <strong> MemoryType </strong>
+            <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-memorytype">Добавить если нет </button>
+        </div>
+        <div class="col-sm-4">
+            <div id="ddlist-memorytype">
+                @{ Html.RenderAction("DDListMemory", "MemoryType");}
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <strong>  Description </strong> 
     </div>
-    <div  class="col-sm-10">
-       @Html.TextAreaFor(model => model.Description, new { cols = 200, @rows = 10 ,@style="max-width:98%" })
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <strong> File </strong>
+            @Html.DropDownList("AccessLevelID", null, htmlAttributes: new { @class = "form-control" })
+
+            <select style="max-width:130px;  border-color:#1a6358" class="form-control" id="category" name="Category" @*onchange="this.form.submit();"*@>
+                <option>Category</option>
+                <option>Private</option>
+                <option>For sale</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <input type="file" class="upl" fimg="file1"/>
+            <input type="text" id="file1" name="file1" value="" hidden  />
+        </div>
+        <div class="col-sm-2">
+            <strong> ModuleNumber</strong>
+        </div>
+        <div class="col-sm-4">
+            <div id="ddlist-memorytype">
+                @Html.EditorFor(model => model.ModuleNumber, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
     </div>
-</div>
-  <hr />
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <strong>  Description </strong>
+        </div>
+        <div class="col-sm-10">
+            @Html.TextAreaFor(model => model.Description, new { cols = 200, @rows = 10, @style = "max-width:98%" })
+        </div>
+    </div>
+    <hr />
 
 
-<div class="row">
-      <div class="col-sm-2">
-        <strong> Image 1</strong>
-      </div>
-      <div class="col-sm-4">
-        <input type="file" />
-      </div>
-</div>
- <hr />
-<div class="row">
-     <div class="col-sm-2">
-        <strong> Image 2</strong>
-     </div>
-     <div class="col-sm-4">
-        <input  type="file" />
-     </div>
-</div>
- <hr />
-<div class="row">
-     <div class="col-sm-2">
-        <strong> Image 3</strong>
-     </div>
-     <div class="col-sm-4">
-         <input type="file" />
-     </div>
-</div>
- <hr />
-     <div class="row">
-          <div class="col-sm-6">
-          <input type="submit" form="FORM1" class="btn btn-default btn-block" style="max-width:initial; background-color:#1a6358;color:white" value="Add to list" />
-         </div>
-          </div>
-                }
-        @{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
-        @{Html.RenderAction("ModalWindow", "Module"); }
-        @{Html.RenderAction("ModalWindow", "MemoryType"); }
+    <div class="row">
+        <div class="col-sm-2">
+            <strong> Image 1</strong>
+        </div>
+        <div class="col-sm-4">
+            <input type="file" class="pupl" fimg="img1" />
+            <input id="img1" type="text" name="img1"  hidden />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-2">
+            <strong> Image 2</strong>
+        </div>
+        <div class="col-sm-4">
+            <input type="file" class="pupl" fimg="img2" />
+            <input id="img2" type="text" name="img2"  hidden />
+        </div>
+    </div>
+    <hr />
+    <div class="row" hidden>
+        <div class="col-sm-2">
+            <strong> Image 3</strong>
+        </div>
+        <div class="col-sm-4">
+            <input type="file"  class="pupl" fimg="img3"/>
+            <input id="img3" type="text" name="img3"   />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="submit" form="FORM1" class="btn btn-default btn-block" style="max-width:initial; background-color:#1a6358;color:white" value="Add to list" />
+        </div>
+    </div>
+                    }
+@{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
+@{Html.RenderAction("ModalWindow", "Module"); }
+@{Html.RenderAction("ModalWindow", "MemoryType"); }
 <div>
 </div>
-        @section scripts{
-  <script type="text/javascript">
-                $(function () {
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
 
-                    $('#DDListAutoBrand').change(function () {
-                        // получаем выбранный id
-                        var id = $(this).val();
-                        $.ajax({
-                            type: 'GET',
-                            url: '@Url.Action("ModelsByBrand","CreateAutoBrand")/' + id,
-                            success: function (data) {
+            $('#DDListAutoBrand').change(function () {
+                // получаем выбранный id
+                var id = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ModelsByBrand","CreateAutoBrand")/' + id,
+                    success: function (data) {
 
-                              // заменяем содержимое присланным частичным представлением
-                              $('#DDListAutoModel').replaceWith(data);
-                          }
-                     });
-               });
-          })
-  </script>
-    }
- 
+                        // заменяем содержимое присланным частичным представлением
+                        $('#DDListAutoModel').replaceWith(data);
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script type="text/javascript">
+
+        $('#submit').on('click', function (e) {
+            e.preventDefault();
+            var files = document.getElementById('uploadFile').files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("Upload", "Home")',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            alert(result);
+                        },
+                        error: function (xhr, status, p3) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                } else {
+                    alert("Браузер не поддерживает загрузку файлов HTML5!");
+                }
+            }
+        });
+
+
+        function aupload(_filedata,destinput,acturl) {
+            //alert(destinput);
+            $.ajax({
+                type: "POST",
+                url: acturl,
+                contentType: false,
+                processData: false,
+                data: _filedata,
+                success: function (result) {
+                   
+                    $('#'+destinput).attr('value', result);
+                    //alert($('#'+destinput).attr('value'));
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        $(".upl").change(function () {
+            var files = this.files;
+
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+                    aupload(data, $(this).attr('fimg'),'@Url.Action("Upload", "CreateCarDumpRecord")');
+                }
+            }
+
+        });
+        $(".pupl").change(function () {
+            var files = this.files;
+
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+                    aupload(data, $(this).attr('fimg'),'@Url.Action("UploadPic", "CreateCarDumpRecord")');
+                }
+            }
+
+        });
+
+       
+    </script>
+
+
+}
+
+

@@ -1,45 +1,31 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h4></h4>
-<div style="margin-top:5px;" class="row">
-    <div class="col-sm-2">
-        <h4 style="color:#1a6358">Full access:<span class="glyphicon glyphicons-right-arrow"></span></h4>
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Brands", "Index", "AutoBrandsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Models", "Index", "AutoModelsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Modules", "Index", "ModulesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Типы памяти", "Index", "MemoryTypesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" });
-    </div>
-</div>
+@{Html.RenderAction("FullMenu", "AdminPanel", null);}
 
 
 <h2>Personal Area</h2>
+<h2>@User.Identity.Name</h2>
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
             <img src="~/Images/Home/photographer-30423_640.png" class="img-thumbnail" alt="user photo" width="200" height="120" />
         </div>
 
-    <div class="col-sm-4">
+        <div class="col-sm-4">
             <ul class="list-group">
                 <li class="list-group-item"><span class="badge">Vasy Petrov</span> User name</li>
                 <li class="list-group-item"><span class="badge">12.11.2015</span> Registration Date</li>
                 <li class="list-group-item"><span class="badge">Vasy@gmail.com</span> Email</li>
                 @*<li class="list-group-item">Change data (ссылка)</li>*@
             </ul>
-            @Html.ActionLink("Change data","Index","Manage",null,new {@class="btn btn-primary btn-block", @style= "background-color:#1a6358; border-color:#1a6358" })
-    </div>
+            @Html.ActionLink("Change data", "Index", "Manage", null, new { @class = "btn btn-primary btn-block", @style = "background-color:#1a6358; border-color:#1a6358" })
+        </div>
         <div class="col-sm-4">
             <ul class="list-group">
                 <li class="list-group-item"><span class="badge">12</span> Your files</li>
@@ -47,7 +33,7 @@
                 <li class="list-group-item"><span class="badge">3</span>Balance </li>
             </ul>
             @*<button type="button" class="btn btn-primary btn-block" style="background-color:#1a6358;" data-toggle="modal">Add files</button>*@
-            @Html.ActionLink("Add Files", "Create", "CreateCarDumpRecord", null, new  { @class="btn btn-primary btn-block  " , style = "background-color:#1a6358; border-color:#1a6358" });
+            @Html.ActionLink("Add Files", "Create", "CreateCarDumpRecord", null, new { @class = "btn btn-primary btn-block  ", style = "background-color:#1a6358; border-color:#1a6358" });
 
         </div>
     </div>
@@ -67,11 +53,11 @@
                     })*@
                 <label class="control-label">Model </label>
                 @*@Html.DropDownList("modelname", Model.Models as SelectList,
-                htmlAttributes: new
-                {
-                    @class = "form-control",
-                    onchange = "this.form.submit();"
-                })*@
+                    htmlAttributes: new
+                    {
+                        @class = "form-control",
+                        onchange = "this.form.submit();"
+                    })*@
                 <label class="control-label">Auto </label>
                 @*@Html.DropDownList("brandname", Model.AutoBrands as SelectList,
                     htmlAttributes: new
@@ -97,24 +83,35 @@
 <div class="container">
     <div class="row" style="margin-top:10px;">
         <ul class="nav nav-pills cvet">
-            <li class="active"><a data-toggle="tab" href="#home">ALL</a></li>
-            <li><a data-toggle="pill" href="#menu1">OPEN</a></li>
-            <li><a data-toggle="pill" href="#menu2">SELL</a></li>
-            <li><a data-toggle="pill" href="#menu3">BOUGHT</a></li>
+            <li class="active"><a data-toggle="tab" href="#home">ALL </a></li>
+            <li><a data-toggle="pill" href="#menu1">Private only</a></li>
+            <li><a data-toggle="pill" href="#menu2">Public only</a></li>
+            <li><a data-toggle="pill" href="#menu3">Public confirmed</a></li>
         </ul>
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
                 @*<h4>Recently added</h4>*@
-             
+                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                    {
+                        userId = User.Identity.GetUserId()
+                    });}
             </div>
             <div id="menu1" class="tab-pane fade">
-                <h4>Open access</h4>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <h4>Private only</h4>
+                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                        {
+                            userId = User.Identity.GetUserId(),
+                            accessId = 2
+                    });}
             </div>
             <div id="menu2" class="tab-pane fade">
-                <h4>For sell</h4>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div>
+                <h4>Public only</h4>
+                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                    {
+                        userId = User.Identity.GetUserId(),
+                        accessId = 1
+                    });}
+             </div>
             <div id="menu3" class="tab-pane fade">
                 <h4>Bought</h4>
                 <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>

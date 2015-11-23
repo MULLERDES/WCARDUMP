@@ -13,5 +13,10 @@ namespace CarDumpApp.Controllers.SuperAdmin
         {
             return View();
         }
+
+        public ActionResult FullMenu()
+        {
+            return PartialView();
+        }
     }
 }

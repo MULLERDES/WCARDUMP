@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MConverter.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PersonalOfficeController.cs" />
     <Compile Include="Controllers\Production\CreateAutoBrandController.cs" />
@@ -197,6 +198,9 @@
     <Compile Include="Models\CarDump.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarDumpAccessLevel.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CarDumpModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,6 +223,9 @@
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Module.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoredFile.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -355,8 +362,13 @@
     <Content Include="Views\AutoModelsAdmin\Edit.cshtml" />
     <Content Include="Views\AutoModelsAdmin\Index.cshtml" />
     <Content Include="Views\AdminPanel\Index.cshtml" />
+    <Content Include="Views\AdminPanel\FullMenu.cshtml" />
+    <Content Include="Views\Shared\_AdminView.cshtml" />
+    <Content Include="Views\Home\CarDumpsListByUserId.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UploadFilesPics\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

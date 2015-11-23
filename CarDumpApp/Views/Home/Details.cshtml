@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FileURL)
+            @Html.ActionLink("Загрузить файл", "FileDownload",new { parentid = Model.Id }, null);
         </dd>
         <dt>
             Status
@@ -63,13 +63,15 @@
 <div class="row">
  
         <div class="col-sm-6">
-            <img class="img-thumbnail" style="width:500px; height:350px" src="~/Images/Home/images.jpg" />
+            <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
             <p> Фото самого модуля</p>
         </div>
  
     <div class="col-sm-6">
-        <img class="img-thumbnail" style="width:500px; height:350px" src="~/Images/Home/87844475.jpg" />
+        <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
         <p> Фотография наклейки-стикера</p>
     </div>
 </div>
+
+ 
 

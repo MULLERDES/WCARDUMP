@@ -13,7 +13,7 @@ namespace CarDumpApp.Controllers
         CarDumpDatabaseEntities db = new CarDumpDatabaseEntities();
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Search");
         }
 
         public ActionResult About()
@@ -80,12 +80,12 @@ namespace CarDumpApp.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        public ActionResult SearchP(int? brandname, int? modelname)
-        {
-            var models = (from c in db.AutoModels where c.AutoBrandID == 1 select c).ToList();
-            return PartialView("SearchP", new SelectList(models, "Id", "Name"));
-        }
+        //[HttpPost]
+        //public ActionResult SearchP(int? brandname, int? modelname)
+        //{
+        //    var models = (from c in db.AutoModels where c.AutoBrandID == 1 select c).ToList();
+        //    return PartialView("SearchP", new SelectList(models, "Id", "Name"));
+        //}
 
 
         public ActionResult Details(int? id)
@@ -101,5 +101,44 @@ namespace CarDumpApp.Controllers
             }
             return View(cd);
         }
+
+
+        public FileContentResult FileDownload(int parentid)
+        {
+            //declare byte array to get file content from database and string to store file name
+            byte[] fileData;
+            string fileName;
+            //create object of LINQ to SQL class
+            var filedb = (from s in db.StoredFiles where s.ParentCarDumpRecordId == parentid select s).ToList();
+            if(filedb.Count > 0)
+            {
+                fileData = filedb[filedb.Count - 1].FileData;
+                fileName = filedb[filedb.Count - 1].OriginalFileName;
+                return File(fileData,"car dump" , fileName);
+            }
+            else return null;
+            //only one record will be returned from database as expression uses condtion on primary field
+            //so get first record from returned values and retrive file content (binary) and filename
+         
+            //return file and provide byte file content and file name
+           
+        }
+
+        public ActionResult CarDumpsListByUserId(string userId, int? accessId)
+        {
+            IEnumerable<CarDump> CD = null;// (from s in db.CarDumps where s.PostedUserID == userId select s).ToList();
+            if(accessId == null)
+            {
+                CD = (from s in db.CarDumps where s.PostedUserID == userId select s).ToList();
+            }
+            else
+            {
+                CD = (from s in db.CarDumps where s.PostedUserID == userId && s.AccessLevelID==accessId select s).ToList();
+            }
+            
+         
+            return PartialView(CD);
+        }
+
     }
 }

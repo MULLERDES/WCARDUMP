@@ -22,9 +22,15 @@ namespace CarDumpApp.Models
         public string ModuleNumber { get; set; }
         public string FileURL { get; set; }
         public string Description { get; set; }
+        public bool Checked { get; set; }
+        public string Pic1Url { get; set; }
+        public string Pic2Url { get; set; }
+        public string PostedUserID { get; set; }
+        public int AccessLevelID { get; set; }
     
         public virtual AutoModel AutoModel { get; set; }
         public virtual MemoryType MemoryType { get; set; }
         public virtual Module Module { get; set; }
+        public virtual CarDumpAccessLevel CarDumpAccessLevel { get; set; }
     }
 }

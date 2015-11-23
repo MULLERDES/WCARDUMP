@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "_AdminView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>_AdminView</h2>
+
+@{Html.RenderAction("FullMenu", "AdminPanel", null);}
+
+@RenderBody()

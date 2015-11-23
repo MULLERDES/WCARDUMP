@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище CarDumpDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище CarDumpDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AutoBrands">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,6 +20,13 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AutoBrandID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CarDumpAccessLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="CarDumps">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,6 +39,11 @@
           <Property Name="ModuleNumber" Type="nvarchar" MaxLength="350" />
           <Property Name="FileURL" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Checked" Type="bit" Nullable="false" />
+          <Property Name="Pic1Url" Type="nvarchar(max)" />
+          <Property Name="Pic2Url" Type="nvarchar(max)" />
+          <Property Name="PostedUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="AccessLevelID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MemoryTypes">
           <Key>
@@ -47,6 +59,27 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="StoredFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileData" Type="varbinary(max)" />
+          <Property Name="OriginalFileName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ParentCarDumpRecordId" Type="int" />
+        </EntityType>
+        <Association Name="FK_accesslevel_cd">
+          <End Role="CarDumpAccessLevel" Type="Self.CarDumpAccessLevel" Multiplicity="1" />
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDumpAccessLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AutoModels_ToTable">
           <End Role="AutoBrands" Type="Self.AutoBrands" Multiplicity="1" />
           <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="*" />
@@ -98,9 +131,15 @@
         <EntityContainer Name="Хранилище CarDumpDatabaseModelContainer">
           <EntitySet Name="AutoBrands" EntityType="Self.AutoBrands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AutoModels" EntityType="Self.AutoModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarDumpAccessLevel" EntityType="Self.CarDumpAccessLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDumps" EntityType="Self.CarDumps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemoryTypes" EntityType="Self.MemoryTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoredFiles" EntityType="Self.StoredFiles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_accesslevel_cd" Association="Self.FK_accesslevel_cd">
+            <End Role="CarDumpAccessLevel" EntitySet="CarDumpAccessLevel" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
           <AssociationSet Name="FK_AutoModels_ToTable" Association="Self.FK_AutoModels_ToTable">
             <End Role="AutoBrands" EntitySet="AutoBrands" />
             <End Role="AutoModels" EntitySet="AutoModels" />
@@ -118,8 +157,7 @@
             <End Role="CarDumps" EntitySet="CarDumps" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CarDumpDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -156,6 +194,12 @@
           <NavigationProperty Name="AutoModel" Relationship="Self.FK_T_ToAutoModel" FromRole="CarDumps" ToRole="AutoModels" />
           <NavigationProperty Name="MemoryType" Relationship="Self.FK_T_ToMemoryType" FromRole="CarDumps" ToRole="MemoryTypes" />
           <NavigationProperty Name="Module" Relationship="Self.FK_T_ToModule" FromRole="CarDumps" ToRole="Modules" />
+          <Property Name="Checked" Type="Boolean" Nullable="false" />
+          <Property Name="Pic1Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pic2Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostedUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarDumpAccessLevel" Relationship="CarDumpDatabaseModel.FK_accesslevel_cd" FromRole="CarDump" ToRole="CarDumpAccessLevel" />
         </EntityType>
         <EntityType Name="MemoryType">
           <Key>
@@ -243,7 +287,42 @@
             <End Role="Modules" EntitySet="Modules" />
             <End Role="CarDumps" EntitySet="CarDumps" />
           </AssociationSet>
+          <EntitySet Name="StoredFiles" EntityType="CarDumpDatabaseModel.StoredFile" />
+          <EntitySet Name="CarDumpAccessLevels" EntityType="CarDumpDatabaseModel.CarDumpAccessLevel" />
+          <AssociationSet Name="FK_accesslevel_cd" Association="CarDumpDatabaseModel.FK_accesslevel_cd">
+            <End Role="CarDumpAccessLevel" EntitySet="CarDumpAccessLevels" />
+            <End Role="CarDump" EntitySet="CarDumps" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="StoredFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="OriginalFileName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ParentCarDumpRecordId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CarDumpAccessLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarDumps" Relationship="CarDumpDatabaseModel.FK_accesslevel_cd" FromRole="CarDumpAccessLevel" ToRole="CarDump" />
+        </EntityType>
+        <Association Name="FK_accesslevel_cd">
+          <End Type="CarDumpDatabaseModel.CarDumpAccessLevel" Role="CarDumpAccessLevel" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.CarDump" Role="CarDump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDumpAccessLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDump">
+              <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -270,6 +349,11 @@
           <EntitySetMapping Name="CarDumps">
             <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDump">
               <MappingFragment StoreEntitySet="CarDumps">
+                <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
+                <ScalarProperty Name="PostedUserID" ColumnName="PostedUserID" />
+                <ScalarProperty Name="Pic2Url" ColumnName="Pic2Url" />
+                <ScalarProperty Name="Pic1Url" ColumnName="Pic1Url" />
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AutoModelId" ColumnName="AutoModelId" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
@@ -294,6 +378,24 @@
               <MappingFragment StoreEntitySet="Modules">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoredFiles">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.StoredFile">
+              <MappingFragment StoreEntitySet="StoredFiles">
+                <ScalarProperty Name="ParentCarDumpRecordId" ColumnName="ParentCarDumpRecordId" />
+                <ScalarProperty Name="OriginalFileName" ColumnName="OriginalFileName" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarDumpAccessLevels">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDumpAccessLevel">
+              <MappingFragment StoreEntitySet="CarDumpAccessLevel">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

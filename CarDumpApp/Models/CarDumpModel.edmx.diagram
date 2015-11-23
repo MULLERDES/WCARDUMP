@@ -14,6 +14,9 @@
         <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToAutoModel" ManuallyRouted="false" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToMemoryType" ManuallyRouted="false" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToModule" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.StoredFile" Width="1.5" PointX="5.75" PointY="5.625" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.CarDumpAccessLevel" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_accesslevel_cd" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
