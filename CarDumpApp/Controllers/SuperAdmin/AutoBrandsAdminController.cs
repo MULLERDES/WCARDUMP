@@ -58,6 +58,26 @@ namespace CarDumpApp.Controllers.SuperAdmin
             return View(autoBrand);
         }
 
+        public ActionResult CreateFromList()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public String CreateFromList(string lines)
+        {
+            //string[] ls = lines.Split(new char[] { '\n' });
+            //foreach(var item in ls)
+            //{
+                
+            //    AutoBrand ab = new AutoBrand() { Name = item.Replace('\r','\0') };
+            //    db.AutoBrands.Add(ab);
+            //    db.SaveChanges();
+            //}
+            return "ok";
+        }
+
+
         // GET: AutoBrandsAdmin/Edit/5
         public ActionResult Edit(int? id)
         {

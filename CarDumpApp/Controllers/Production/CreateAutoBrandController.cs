@@ -39,17 +39,22 @@ namespace CarDumpApp.Controllers.Production
             return PartialView("DDListAutoBrand");
         }
 
-        public ActionResult DDListAutoBrand(AutoBrand br)
+        public ActionResult DDListAutoBrand(AutoBrand br,AutoModel mdl)
         {
+
             AutoBrand sel=null;
-            if(br != null)
+            if (mdl is AutoModel)
+            {
+                sel = mdl.AutoBrand;
+            }
+            else if(br != null)
                 sel = br;
 
-            if(sel != null)
+            if(sel == null)
                 sel = (from c in db.AutoBrands select c).ToList()[0];
 
-            ViewBag.DDListAutoBrand = new SelectList(db.AutoBrands, "Id", "Name",sel);
-            ViewBag.DDListAutoModel= new SelectList(db.AutoModels.Where(tf=>tf.AutoBrandID==sel.Id), "Id", "Name");
+            ViewBag.DDListAutoBrand = new SelectList(db.AutoBrands, "Id", "Name",sel?.Id);
+            ViewBag.DDListAutoModel= new SelectList(db.AutoModels.Where(tf=>tf.AutoBrandID==sel.Id), "Id", "Name",mdl?.Id);
             return PartialView();
         }
 

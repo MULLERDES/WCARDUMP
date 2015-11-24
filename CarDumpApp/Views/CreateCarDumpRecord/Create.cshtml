@@ -24,7 +24,7 @@
         </div>
         <div class="col-sm-4">
             <div id="ddlist-autobrand">
-                @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand");}
+                @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand",new { mdl = Model?.AutoModel });}
             </div>
         </div>
         <div class="col-sm-2">
@@ -33,7 +33,7 @@
         </div>
         <div class="col-sm-4">
             <div id="ddlist-module">
-                @{ Html.RenderAction("DDListModule", "Module");}
+                @{ Html.RenderAction("DDListModule", "Module", new { mdl = Model?.Module });}
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="col-sm-4">
             <div id="ddlist-memorytype">
-                @{ Html.RenderAction("DDListMemory", "MemoryType");}
+                @{ Html.RenderAction("DDListMemory", "MemoryType",new { memt = Model?.MemoryType });}
             </div>
         </div>
 
@@ -63,18 +63,14 @@
 
     <div class="row">
         <div class="col-sm-2">
-            <strong> File </strong>
+            <strong> File access </strong>
             @Html.DropDownList("AccessLevelID", null, htmlAttributes: new { @class = "form-control" })
 
-            <select style="max-width:130px;  border-color:#1a6358" class="form-control" id="category" name="Category" @*onchange="this.form.submit();"*@>
-                <option>Category</option>
-                <option>Private</option>
-                <option>For sale</option>
-            </select>
+           
         </div>
         <div class="col-sm-4">
-            <input type="file" class="upl" fimg="file1"/>
-            <input type="text" id="file1" name="file1" value="" hidden  />
+            <input type="file" class="upl" fimg="file1" value=""/>
+            <input type="text" id="file1" name="file1" value="@ViewBag.file1"  hidden  />
         </div>
         <div class="col-sm-2">
             <strong> ModuleNumber</strong>
@@ -104,7 +100,7 @@
         </div>
         <div class="col-sm-4">
             <input type="file" class="pupl" fimg="img1" />
-            <input id="img1" type="text" name="img1"  hidden />
+            <input id="img1" type="text" name="img1"  value="@Model.Pic1Url" hidden />
         </div>
     </div>
     <hr />
@@ -114,7 +110,7 @@
         </div>
         <div class="col-sm-4">
             <input type="file" class="pupl" fimg="img2" />
-            <input id="img2" type="text" name="img2"  hidden />
+            <input id="img2" type="text" name="img2"  value="@Model.Pic2Url"  hidden />
         </div>
     </div>
     <hr />

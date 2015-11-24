@@ -292,13 +292,12 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="UploadFilesPics\1c0de170-aae1-44d6-9c08-54b993dff911Honda crv label_33351.jpg" />
-    <Content Include="UploadFilesPics\34af9e6a-ae3d-41f2-80a2-7cad14c872a9honda_crv_3473.jpg" />
-    <Content Include="UploadFilesPics\3b041afa-2975-491d-b02a-0d04f99bab52fiat_palio_3417.jpg" />
-    <Content Include="UploadFilesPics\45c2cc82-8164-4494-a753-82648c52eda3nissan_pathfinder_3573.jpg" />
-    <Content Include="UploadFilesPics\70fe9720-363c-44e9-b23b-eccc2d6d1d88Nissan label_33427.jpg" />
-    <Content Include="UploadFilesPics\72f78adf-a99f-4bc0-a7d8-8747ad805321ford ranger label_33323.jpg" />
-    <Content Include="UploadFilesPics\8555f3c0-76a7-474a-9f13-50f655f1ab0aFiat label_33305.jpg" />
+    <Content Include="UploadFilesPics\00903089-a304-483a-bbed-2c7f99fe2518image_num_view.jpg" />
+    <Content Include="UploadFilesPics\2e0e8211-9e61-442e-877d-454b67256f01image_mod_view.jpg" />
+    <Content Include="UploadFilesPics\7be0da3e-951d-42c2-b352-635196d01434image_mod_view.jpg" />
+    <Content Include="UploadFilesPics\dccadcb1-e3c8-4e79-8707-09036dae394aimage_num_view.jpg" />
+    <Content Include="UploadFilesPics\e040506b-ea29-4687-84e6-7d0ccc97cefaimage_mod_view.jpg" />
+    <Content Include="UploadFilesPics\f5eab6c4-fca8-450e-8f2b-77d4eebecb1cimage_num_view.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -371,7 +370,8 @@
     <Content Include="Views\AdminPanel\Index.cshtml" />
     <Content Include="Views\AdminPanel\FullMenu.cshtml" />
     <Content Include="Views\Shared\_AdminView.cshtml" />
-    <Content Include="Views\Home\CarDumpsListByUserId.cshtml" />
+    <Content Include="Views\AutoBrandsAdmin\CreateFromList.cshtml" />
+    <Content Include="Views\AdminPanel\CarDumpsListByUserId.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

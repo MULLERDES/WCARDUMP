@@ -33,6 +33,8 @@ namespace CarDumpApp.Controllers
 
         public ActionResult Search(int? brandname, int? modelname)
         {
+            
+
             List<AutoBrand> brands = null;
             List<AutoModel> models = null;
             List<CarDump> cd = null;
@@ -51,11 +53,11 @@ namespace CarDumpApp.Controllers
                 {
                     selectedModel = (from s in db.AutoModels where s.Id == modelname select s).ToList()?[0];
                     if(selectedModel.AutoBrandID == selectedBrand.Id)
-                        cd = (from s in db.CarDumps where s.AutoModelId == modelname select s).ToList();
+                        cd = (from s in db.CarDumps where s.AutoModelId == modelname && s.AccessLevelID==1 select s).ToList();
                 }
                 else
                 {
-                    cd = (from s in db.CarDumps where s.AutoModel.AutoBrandID == brandname select s).ToList();
+                    cd = (from s in db.CarDumps where s.AutoModel.AutoBrandID == brandname && s.AccessLevelID ==1 select s).ToList();
                 }
             }
             else
@@ -68,7 +70,7 @@ namespace CarDumpApp.Controllers
 
             if(cd == null)
             {
-                cd = (from s in db.CarDumps select s).ToList();
+                cd = (from s in db.CarDumps where s.AccessLevelID == 1 select s).ToList();
             }
 
             CarDumpSearchViewModel vm = new CarDumpSearchViewModel()
@@ -124,21 +126,7 @@ namespace CarDumpApp.Controllers
            
         }
 
-        public ActionResult CarDumpsListByUserId(string userId, int? accessId)
-        {
-            IEnumerable<CarDump> CD = null;// (from s in db.CarDumps where s.PostedUserID == userId select s).ToList();
-            if(accessId == null)
-            {
-                CD = (from s in db.CarDumps where s.PostedUserID == userId select s).ToList();
-            }
-            else
-            {
-                CD = (from s in db.CarDumps where s.PostedUserID == userId && s.AccessLevelID==accessId select s).ToList();
-            }
-            
-         
-            return PartialView(CD);
-        }
+       
 
     }
 }

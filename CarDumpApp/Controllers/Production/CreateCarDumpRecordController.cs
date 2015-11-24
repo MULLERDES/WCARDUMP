@@ -20,20 +20,22 @@ namespace CarDumpApp.Controllers.Production
 
         //public ActionResult Create()
         //{
-
         //    ViewBag.AccessLevelID = new SelectList(db.CarDumpAccessLevels, "Id", "Name");
         //    return View();
         //}
-        public ActionResult Create(int?  CDid)
+        public ActionResult Create(int?  id)
         {
             ViewBag.AccessLevelID = new SelectList(db.CarDumpAccessLevels, "Id", "Name");
 
-            if(CDid != null)
+            if(id != null)
             {
-                CarDump Cd = (from s in db.CarDumps where s.Id == CDid select s).ToList()[0];
+                CarDump Cd = (from s in db.CarDumps where s.Id == id select s).ToList()[0];
+
+                StoredFile File1 = (from s in db.StoredFiles where s.ParentCarDumpRecordId == Cd.Id orderby s.Id ascending select s).ToList().Last();
+                ViewBag.file1 = File1.Id;
                 return View(Cd);
             }
-            return View( );
+            return View(new CarDump());
         }
 
         [HttpPost]

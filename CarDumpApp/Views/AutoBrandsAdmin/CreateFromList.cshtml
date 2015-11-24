@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "CreateFromList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateFromList</h2>
+
+@using(Html.BeginForm())
+{
+    <textarea name="lines" cols="100", rows="100"></textarea>
+    <input type="submit" value="Process" />
+}

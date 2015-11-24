@@ -32,9 +32,9 @@ namespace CarDumpApp.Controllers.Production
             ViewBag.DDListMemory = new SelectList(db.MemoryTypes, "Id", "Name");
             return PartialView("DDListMemory");
         }
-        public ActionResult DDListMemory()
+        public ActionResult DDListMemory(MemoryType memt)
         {
-            ViewBag.DDListMemory = new SelectList(db.MemoryTypes, "Id", "Name");
+            ViewBag.DDListMemory = new SelectList(db.MemoryTypes, "Id", "Name",memt?.Id);
             return PartialView();
         }
     }

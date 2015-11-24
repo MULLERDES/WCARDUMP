@@ -31,9 +31,9 @@ namespace CarDumpApp.Controllers.Production
             ViewBag.DDListModule = new SelectList(db.Modules, "Id", "Name");
             return PartialView("DDListModule");
         }
-        public ActionResult DDListModule()
+        public ActionResult DDListModule(Module mdl)
         {
-            ViewBag.DDListModule = new SelectList(db.Modules, "Id", "Name");
+            ViewBag.DDListModule = new SelectList(db.Modules, "Id", "Name",mdl?.Id);
             return PartialView();
         } 
     }

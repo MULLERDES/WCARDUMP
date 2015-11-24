@@ -91,14 +91,14 @@
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
                 @*<h4>Recently added</h4>*@
-                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                @{ Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
                     {
                         userId = User.Identity.GetUserId()
                     });}
             </div>
             <div id="menu1" class="tab-pane fade">
                 <h4>Private only</h4>
-                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                @{ Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
                         {
                             userId = User.Identity.GetUserId(),
                             accessId = 2
@@ -106,7 +106,7 @@
             </div>
             <div id="menu2" class="tab-pane fade">
                 <h4>Public only</h4>
-                @{ Html.RenderAction("CarDumpsListByUserId", "Home", new
+                @{ Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
                     {
                         userId = User.Identity.GetUserId(),
                         accessId = 1
