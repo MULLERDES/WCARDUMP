@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
- 
+    int index = 0;
 }
 <h3>Search files</h3>
 <div class="row hidden">
@@ -25,11 +25,12 @@
                     @class = "form-control",
                     onchange = "this.form.submit();"
                 })
-          </div>
+    </div>
 </form>
 <table class="table table-hover" style="margin-top:20px;">
     <thead>
         <tr style="background-color:#1a6358;color:#ffffff;">
+            <th><label class="control-label">N</label></th>
             <th>
                 <label class="control-label">Auto</label>
             </th>
@@ -48,57 +49,62 @@
             <th>
                 <label class="control-label">ModuleNumber</label>
             </th>
-            
+
             <th>
                 <label class="control-label">Open</label>
             </th>
-          
+
         </tr>
     </thead>
-        @{
-            if(Model.CarDumps != null)
+    @{
+        if(Model.CarDumps != null)
+        {
+            foreach(var item in Model.CarDumps)
             {
-                foreach(var item in Model.CarDumps)
-                {
-                    <tr>
-                        <td>
+                {index++;}
+                <tr>
+                    <td>
+                        @index
+                                               
+                    </td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
-                        </td>
-                        <td>
+                        @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
+                    </td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.AutoModel.Name)
-                        </td>
+                        @Html.DisplayFor(modelItem => item.AutoModel.Name)
+                    </td>
 
-                        <td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
-                        <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.Module.Name)
-                        </td>
-                        <td>
+                        @Html.DisplayFor(modelItem => item.Module.Name)
+                    </td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.MemoryType.Name)
-                        </td>
-                        <td>
+                        @Html.DisplayFor(modelItem => item.MemoryType.Name)
+                    </td>
+                    <td>
 
-                            @Html.DisplayFor(modelItem => item.ModuleNumber)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        </td>
+                        @Html.DisplayFor(modelItem => item.ModuleNumber)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    </td>
 
-                    </tr>
-                }
+                </tr>
             }
         }
+    }
 </table>
 <div class="row">
     <div class="col-sm-2">
         <ul class="pager">
-            <li ><a style="color:#1a6358" href="#">Previous</a></li>
+            <li><a style="color:#1a6358" href="#">Previous</a></li>
             <li><a style="color:#1a6358" href="#">Next</a></li>
         </ul>
     </div>
@@ -218,7 +224,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" id="phone number" placeholder="Enter phone number">
                         </div>
-                       
+
                         <button type="submit" class="btn btn-default" style="background-color:#1a6358; color:white">Restore</button>
                     </form>
                 </div>
