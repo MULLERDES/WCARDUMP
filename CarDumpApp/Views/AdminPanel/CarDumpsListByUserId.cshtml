@@ -1,85 +1,72 @@
 ﻿@model IEnumerable<CarDumpApp.Models.CarDump>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Year)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModuleNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Checked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pic1Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pic2Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostedUserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AutoModel.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MemoryType.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Module.Name)
-        </th>
-        <th></th>
-    </tr>
+ <div class="row">
 
-    @foreach(var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModuleNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileURL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Checked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pic1Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pic2Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostedUserID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AutoModel.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemoryType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Module.Name)
-            </td>
-            <td>
-                @Html.ActionLink("edit", "Create","CreateCarDumpRecord", new { id = item.Id }, null)
-            </td>
-        </tr>
-    }
+     <table class="table table-hover" style="margin-top:20px;">
+         <thead>
+             <tr style="background-color:#1a6358;color:#ffffff;">
+                 <th>
+                     <label class="control-label">Brand</label>
+                 </th>
+                 <th>
+                     <label class="control-label">Model</label>
+                 </th>
+                 <th>
+                     <label class="control-label">Year</label>
+                 </th>
+                 <th style="min-width:110px;">
+                     <label class="control-label">Module type</label>
+                 </th>
+                 <th>
+                     <label class="control-label">Memory type</label>
+                 </th>
+                 <th>
+                     <label class="control-label">Partnumber</label>
+                 </th>
+                 <th>
+                     <label class="control-label">Status</label>
+                 </th>
+                 <th>
+                     <label class="control-label"> </label>
+                 </th>
 
-</table>
+             </tr>
+         </thead>
+         @{
+             if(Model != null)
+             {
+                 foreach(var item in Model)
+                 {
+                     <tr>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.AutoModel.Name)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.Year)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.Module.Name)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.MemoryType.Name)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.ModuleNumber)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.Checked)
+                         </td>
+                         <td>
+                             @Html.ActionLink("edit", "Create", "CreateCarDumpRecord", new { id = item.Id }, null)
+                         </td>
+                     </tr>
+                 }
+             }
+         }
+     </table>
 
+ </div>
