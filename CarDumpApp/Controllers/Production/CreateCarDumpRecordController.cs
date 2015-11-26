@@ -29,7 +29,7 @@ namespace CarDumpApp.Controllers.Production
 
             if(id != null)
             {
-                CarDump Cd = (from s in db.CarDumps where s.Id == id select s).ToList()[0];
+                CarDump Cd = (from s in db.CarDumps where s.Id == id select s).First();
 
                 StoredFile File1 = (from s in db.StoredFiles where s.ParentCarDumpRecordId == Cd.Id orderby s.Id ascending select s).ToList().Last();
                 ViewBag.file1 = File1.Id;
@@ -64,7 +64,7 @@ namespace CarDumpApp.Controllers.Production
             }
             {
                 //files process
-                if(file1.ToInt() >= 0)
+                if(file1?.ToInt() >= 0)
                 {
                     int fileid = file1.ToInt();
                     var f = (from c in db.StoredFiles where c.Id == fileid select c).ToList()[0];
@@ -79,7 +79,7 @@ namespace CarDumpApp.Controllers.Production
 
 
             return RedirectToAction("Index");
-           // return $"OK {_file1} {Request["DDListAutoBrand"]}";
+          
         }
 
 

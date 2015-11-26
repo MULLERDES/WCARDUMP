@@ -1,30 +1,18 @@
 ﻿@model CarDumpApp.Models.CarDump
 
-
 @{Html.RenderAction("FullMenu", "AdminPanel", null);}
- 
-
 <h4>Create new </h4>
 @Html.HiddenFor(model => model.Id)
-
-@*<div id="sw">
-
-</div>*@
-
-@*@using(Ajax.BeginForm("Create", "CreateCarDumpRecord", new AjaxOptions { UpdateTargetId = "sw" }, new { id = "FORM1" }))*@
-
 @using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="row">
         <div class="col-sm-2">
             <strong> Brand/Model</strong>
-            @*<button hidden type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-AutobrandAdd">Добавить если нет</button>*@
         </div>
         <div class="col-sm-4">
             <div id="ddlist-autobrand">
-                @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand",new { mdl = Model?.AutoModel });}
+                @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand", new { mdl = Model?.AutoModel });}
             </div>
         </div>
         <div class="col-sm-2">
@@ -38,7 +26,6 @@
         </div>
     </div>
     <hr />
-
     <div class="row">
         <div class="col-sm-2">
             <strong> Year</strong>
@@ -54,23 +41,19 @@
         </div>
         <div class="col-sm-4">
             <div id="ddlist-memorytype">
-                @{ Html.RenderAction("DDListMemory", "MemoryType",new { memt = Model?.MemoryType });}
+                @{ Html.RenderAction("DDListMemory", "MemoryType", new { memt = Model?.MemoryType });}
             </div>
         </div>
-
     </div>
     <hr />
-
     <div class="row">
         <div class="col-sm-2">
             <strong> File access </strong>
             @Html.DropDownList("AccessLevelID", null, htmlAttributes: new { @class = "form-control" })
-
-           
         </div>
         <div class="col-sm-4">
-            <input type="file" class="upl" fimg="file1" value=""/>
-            <input type="text" id="file1" name="file1" value="@ViewBag.file1"  hidden  />
+            <input type="file" class="upl" fimg="file1" value="" />
+            <input type="text" id="file1" name="file1" value="@ViewBag.file1" hidden />
         </div>
         <div class="col-sm-2">
             <strong> ModuleNumber</strong>
@@ -82,7 +65,6 @@
         </div>
     </div>
     <hr />
-
     <div class="row">
         <div class="col-sm-2">
             <strong>  Description </strong>
@@ -92,15 +74,13 @@
         </div>
     </div>
     <hr />
-
-
     <div class="row">
         <div class="col-sm-2">
             <strong>Label image</strong>
         </div>
         <div class="col-sm-4">
             <input type="file" class="pupl" fimg="img1" />
-            <input id="img1" type="text" name="img1"  value="@Model.Pic1Url" hidden />
+            <input id="img1" type="text" name="img1" value="@Model.Pic1Url" hidden />
         </div>
     </div>
     <hr />
@@ -110,7 +90,7 @@
         </div>
         <div class="col-sm-4">
             <input type="file" class="pupl" fimg="img2" />
-            <input id="img2" type="text" name="img2"  value="@Model.Pic2Url"  hidden />
+            <input id="img2" type="text" name="img2" value="@Model.Pic2Url" hidden />
         </div>
     </div>
     <hr />
@@ -119,8 +99,8 @@
             <strong> Image 3</strong>
         </div>
         <div class="col-sm-4">
-            <input type="file"  class="pupl" fimg="img3"/>
-            <input id="img3" type="text" name="img3"   />
+            <input type="file" class="pupl" fimg="img3" />
+            <input id="img3" type="text" name="img3" />
         </div>
     </div>
     <hr />
@@ -130,13 +110,69 @@
         </div>
     </div>
                     }
+<div class="row">
+    <input type="button" value="Save record" onclick="SaveClick()" />
+</div>
+
 @{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
 @{Html.RenderAction("ModalWindow", "Module"); }
 @{Html.RenderAction("ModalWindow", "MemoryType"); }
 <div>
 </div>
+
+<div class="modal fade" id="mValidationErrors" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Validations error</h4>
+            </div>
+            <div class="modal-body">
+
+                <ul id="mValidationString" style="color:red;"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hide</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 @section scripts{
     <script type="text/javascript">
+        function SaveClick() {
+            var err = true;
+            var messArray = [];
+            if ($('#DDListAutoModel').val() == null)
+            { messArray.push("Auto model is not selected"); err = false; }
+
+            if (($('#Year').val() < 1980) || ($('#Year').val() > 2020))
+            { messArray.push("Year is not valid"); err = false; }
+
+            if (($('#file1').val().length == 0))
+            { messArray.push("File not selected"); err = false; }
+
+            if ($('#ModuleNumber').val().length < 3)
+            { messArray.push("Module number is not entered"); err = false; }
+
+            if ($('#Description').val().length < 3)
+            { messArray.push("Description is not entered"); err = false; }
+
+            if (err == false) {
+                $('#mValidationString').empty();
+                for (var i = 0; i < messArray.length; i++) {
+                    $('#mValidationString').append("<li>" + messArray[i] + "</li>")
+                }
+                $('#mValidationErrors').modal('show');
+            }
+            else {
+                $('#FORM1').submit();
+            }
+        }
+
         $(function () {
 
             $('#DDListAutoBrand').change(function () {
@@ -152,9 +188,6 @@
                 });
             });
         })
-    </script>
-
-    <script type="text/javascript">
 
         $('#submit').on('click', function (e) {
             e.preventDefault();
@@ -165,7 +198,6 @@
                     for (var x = 0; x < files.length; x++) {
                         data.append("file" + x, files[x]);
                     }
-
                     $.ajax({
                         type: "POST",
                         url: '@Url.Action("Upload", "Home")',
@@ -185,8 +217,7 @@
             }
         });
 
-
-        function aupload(_filedata,destinput,acturl) {
+        function aupload(_filedata, destinput, acturl) {
             //alert(destinput);
             $.ajax({
                 type: "POST",
@@ -195,8 +226,8 @@
                 processData: false,
                 data: _filedata,
                 success: function (result) {
-                   
-                    $('#'+destinput).attr('value', result);
+
+                    $('#' + destinput).attr('value', result);
                     //alert($('#'+destinput).attr('value'));
                 },
                 error: function (xhr, status, p3) {
@@ -214,30 +245,21 @@
                     for (var x = 0; x < files.length; x++) {
                         data.append("file" + x, files[x]);
                     }
-                    aupload(data, $(this).attr('fimg'),'@Url.Action("Upload", "CreateCarDumpRecord")');
+                    aupload(data, $(this).attr('fimg'), '@Url.Action("Upload", "CreateCarDumpRecord")');
                 }
             }
-
         });
         $(".pupl").change(function () {
             var files = this.files;
-
             if (files.length > 0) {
                 if (window.FormData !== undefined) {
                     var data = new FormData();
                     for (var x = 0; x < files.length; x++) {
                         data.append("file" + x, files[x]);
                     }
-                    aupload(data, $(this).attr('fimg'),'@Url.Action("UploadPic", "CreateCarDumpRecord")');
+                    aupload(data, $(this).attr('fimg'), '@Url.Action("UploadPic", "CreateCarDumpRecord")');
                 }
             }
-
         });
-
-       
     </script>
-
-
 }
-
-
