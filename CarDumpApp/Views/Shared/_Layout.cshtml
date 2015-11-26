@@ -10,33 +10,43 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <header class="jumbotron  " style="background-image: url('../../Images/Home/phon4.png'); @*background-size:100%*@;">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Car dump home", "Search", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@*@Html.ActionLink("Домашняя страница", "Index", "Home")*@</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Новости", "Index", "News")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <header class="jumbotron subhead " style="background-image: url('../../Images/Home/phon4.png'); @*background-size:100%*@;">
-        <div class="container">
-            <h1 style="color:#ffffff">Прошивки</h1>
+
+            <h2 style="font-size: 24px;
+    font-weight: bold;
+    color: #FBF2D7;
+    font-family: times;">
+                cardump.com.ua
+            </h2>
             <p class="lead" style="color:#ffffff">Сотки полезных прошивок, дампов, eeprom, flash, полезные выкладки для мастеров автомобильной электроники</p>
+
+
+            <div class="navbar navbar-default   ">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("cardump.com.ua", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@*@Html.ActionLink("Домашняя страница", "Index", "Home")*@</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("News", "Index", "News")</li>
+                            <li>@Html.ActionLink("Contacts", "Contact", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+
         </div>
     </header>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

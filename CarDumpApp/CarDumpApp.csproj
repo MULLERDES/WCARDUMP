@@ -217,6 +217,7 @@
       <DependentUpon>CarDumpModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CarDump\DomainModels.cs" />
+    <Compile Include="Models\Home\SearchResultHomeVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MemoryType.cs">
@@ -419,6 +420,11 @@
     <Content Include="Views\Shared\_AdminView.cshtml" />
     <Content Include="Views\AutoBrandsAdmin\CreateFromList.cshtml" />
     <Content Include="Views\AdminPanel\CarDumpsListByUserId.cshtml" />
+    <Content Include="Views\Home\GetModelsByBrand.cshtml" />
+    <Content Include="Views\Home\GetAllBrands.cshtml" />
+    <Content Include="Views\Home\GetAllModules.cshtml" />
+    <Content Include="Views\Home\GetAllMemoryTypes.cshtml" />
+    <Content Include="Views\Home\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
