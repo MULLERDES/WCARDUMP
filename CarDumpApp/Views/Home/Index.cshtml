@@ -11,11 +11,11 @@
         @*Выпадающий список моделей по выбраной марке*@
         @{Html.RenderAction("GetModelsByBrand");}
     </div>
-    <div  style="margin-right:15px;" class="col-sm-2">
+    <div style="margin-right:15px;" class="col-sm-2">
         @*Типы модулей*@
         @{ Html.RenderAction("GetAllModules");}
     </div>
-    <div  style="margin-right:15px;" class="col-sm-2">
+    <div style="margin-right:15px;" class="col-sm-2">
         @*Типы модулей*@
         @{ Html.RenderAction("GetAllMemoryTypes");}
     </div>
@@ -26,13 +26,13 @@
 </div>
 
 <div class="row">
-    @{ Html.RenderAction("SearchResult" );}
+    @{ Html.RenderAction("SearchResult");}
 </div>
 <div class="row">
     <div class="col-sm-3">
         <ul class="pager">
             <li><a id="BPrewButton" style="color:#1a6358" href="#">Previous</a></li>
-            <li><a id="BNextButton" style="color:#1a6358"  href="#" >Next</a></li>
+            <li><a id="BNextButton" style="color:#1a6358" href="#">Next</a></li>
         </ul>
     </div>
     <div class="col-sm-2 col-md-offset-6 ">
@@ -40,7 +40,7 @@
             <li><a style="color:#1a6358" href="#">1</a></li>
             <li><a style="color:#1a6358" href="#">2</a></li>
             <li><a style="color:#1a6358" href="#">3</a></li>
-            
+
         </ul>
     </div>
 </div>
@@ -82,8 +82,8 @@
 
             $("#BPrewButton").click(
                          function () {
-                             if(curretntPage>0)
-                             curretntPage--;
+                             if (curretntPage > 0)
+                                 curretntPage--;
                              loaddata();
                          });
 
@@ -122,4 +122,16 @@
         }
 
     </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $(".trline").click(function () {
+                var s = $(this).find("a:first").attr("href");
+                $(location).attr('href', s);
+
+            });
+        })
+    </script>
 }
+

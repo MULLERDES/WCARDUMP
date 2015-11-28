@@ -7,7 +7,10 @@ namespace CarDumpApp.Models
 {
     public class SearchResultHomeVM
     {
-        private int perpagecount = 10;
+        public static int PerPageNumber
+        {
+            get; set;
+        } = 25;
         public List<CarDump> Cardumps { get; set; }
         public int CurrentPage { get; set; } = 0;
         public int MaximunPages { get; set; }

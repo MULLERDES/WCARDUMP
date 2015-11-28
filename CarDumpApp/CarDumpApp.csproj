@@ -271,6 +271,9 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Resource Include="wm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <EntityDeploy Include="Models\CarDumpModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CarDumpModel.Designer.cs</LastGenOutput>

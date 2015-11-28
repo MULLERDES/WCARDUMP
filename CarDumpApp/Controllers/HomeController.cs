@@ -22,8 +22,7 @@ namespace CarDumpApp.Controllers
         {
             List<AutoModel> itms = new List<AutoModel>();
             if(idbr != null)
-                itms.AddRange(db.AutoModels.Where(c => c.AutoBrandID == idbr).ToArray());
-
+                itms.AddRange(db.AutoModels.Where(c => c.AutoBrandID == idbr).OrderBy(tf => tf.Name).ToArray());
             itms.Insert(0, new AutoModel() { Id = 0, Name = "Model" });
             ViewBag.ModelsByBrand = new SelectList(itms, "Id", "Name");
             return PartialView();
@@ -32,7 +31,7 @@ namespace CarDumpApp.Controllers
         [HttpGet]
         public ActionResult GetAllBrands()
         {
-            List<AutoBrand> itms = db.AutoBrands.ToList();
+            List<AutoBrand> itms = db.AutoBrands.OrderBy(tf=>tf.Name).ToList();
             itms.Insert(0, new AutoBrand() { Id = 0, Name = "Brand" });
             ViewBag.AllBrands = new SelectList(itms, "Id", "Name");
             return PartialView();
@@ -41,7 +40,7 @@ namespace CarDumpApp.Controllers
         [HttpGet]
         public ActionResult GetAllModules()
         {
-            List<Module> itms = db.Modules.ToList();
+            List<Module> itms = db.Modules.OrderBy(tf => tf.Name).ToList();
             itms.Insert(0, new Module() { Id = 0, Name = "Module" });
             ViewBag.AllModules = new SelectList(itms, "Id", "Name");
             return PartialView();
@@ -60,7 +59,7 @@ namespace CarDumpApp.Controllers
         {
             SearchResultHomeVM mdl = new SearchResultHomeVM();
 
-            int perpageCount = 10;
+            int perpageCount = SearchResultHomeVM.PerPageNumber;
             List<CarDump> RetValue = new List<CarDump>();
 
             RetValue.AddRange(

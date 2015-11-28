@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -78,7 +79,7 @@ namespace CarDumpApp.Controllers.Production
 
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","AdminPanel");
           
         }
 
@@ -116,7 +117,7 @@ namespace CarDumpApp.Controllers.Production
         }
 
         [HttpPost]
-        public String UploadPic()
+        public string UploadPic()
         {
             foreach(string file in Request.Files)
             {
@@ -124,13 +125,42 @@ namespace CarDumpApp.Controllers.Production
                 if(upload != null)
                 {
                     // получаем имя файла
-                    string fileName = (Guid.NewGuid().ToString())+ System.IO.Path.GetFileName(upload.FileName);
-                    // сохраняем файл в папку Files в проекте
-                    upload.SaveAs(Server.MapPath("~/UploadFilesPics/" + fileName));
-                    return fileName;
+                    string fileName = (Guid.NewGuid().ToString()) + System.IO.Path.GetFileName(upload.FileName);
+                    //// сохраняем файл в папку Files в проекте
+                    //upload.SaveAs(Server.MapPath("~/UploadFilesPics/" + fileName));
+                    //return fileName;
+
+                    try
+                    {
+                        Image imgsource = Image.FromStream(upload.InputStream); /*Image.FromStreamFromFile(openFileDialog.FileName);*/
+                        imgsource = Resize(imgsource, 500, 350);
+                        Image wm = Resize(Image.FromFile(Server.MapPath("~/")+"wm.png"), 500, 350);
+                        using(var gr = Graphics.FromImage(imgsource))
+                        {
+                            gr.DrawImage(wm, PointF.Empty);
+                        }
+                        imgsource.Save(Server.MapPath("~/UploadFilesPics/" + fileName));
+                        return fileName;
+                    }
+                    catch(Exception)
+                    {
+                        return "null";
+                    }
+
+
                 }
+
+                // imgsource.Save(openFileDialog.FileName + "ss");
+
             }
             return "";
+
+        }
+        public static System.Drawing.Image Resize(System.Drawing.Image value, int newWidth, int newHeight)
+        {
+            System.Drawing.Image resizedImage = new System.Drawing.Bitmap(newWidth, newHeight);
+            System.Drawing.Graphics.FromImage((System.Drawing.Image)resizedImage).DrawImage(value, 0, 0, newWidth, newHeight);
+            return (resizedImage);
         }
     }
 }

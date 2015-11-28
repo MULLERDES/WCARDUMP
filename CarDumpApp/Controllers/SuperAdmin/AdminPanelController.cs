@@ -7,6 +7,8 @@ using CarDumpApp.Models;
 
 namespace CarDumpApp.Controllers.SuperAdmin
 {
+ 
+    [Authorize]
     public class AdminPanelController : Controller
     {
         CarDumpDatabaseEntities db = new CarDumpDatabaseEntities();

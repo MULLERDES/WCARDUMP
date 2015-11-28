@@ -1,8 +1,15 @@
 ﻿@model CarDumpApp.Models.SearchResultHomeVM
+
+@{ 
+    int stNumber = Model.CurrentPage * CarDumpApp.Models.SearchResultHomeVM.PerPageNumber;
+}
 <div id="SearchResult">
     <table class="table table-hover" style="margin-top:20px;">
         <thead>
             <tr style="background-color:#1a6358;color:#ffffff;">
+                <th>
+                    <label class="control-label">№</label>
+                </th>
                 <th>
                     <label class="control-label">Brand</label>
                 </th>
@@ -32,7 +39,11 @@
             {
                 foreach(var item in Model.Cardumps)
                 {
-                    <tr>
+                    { stNumber++;}
+                    <tr class="trline" style="cursor:pointer;">
+                        <td>
+                            @stNumber
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
                         </td>
@@ -52,7 +63,7 @@
                             @Html.DisplayFor(modelItem => item.ModuleNumber)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) 
                         </td>
                     </tr>
                 }
@@ -61,3 +72,4 @@
     </table>
 
 </div>
+
