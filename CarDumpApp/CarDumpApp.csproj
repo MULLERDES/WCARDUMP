@@ -328,6 +328,32 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="TODO.txt" />
+    <Content Include="UploadFilesPics\0ee70fcd-3875-44ab-a9d4-3e087af83928504155_main.jpg" />
+    <Content Include="UploadFilesPics\12d5e5f1-d61b-4065-a2a0-f873d5efc389radioypravlaemaja_machinka.jpg" />
+    <Content Include="UploadFilesPics\186ed3f6-00a2-4c87-b8ba-93c55f65613bimages.jpg" />
+    <Content Include="UploadFilesPics\197adabc-cb47-42f4-b88a-0efa9b09e0c5images.jpg" />
+    <Content Include="UploadFilesPics\240b5527-ccb1-4262-978f-2e1266b21150images.jpg" />
+    <Content Include="UploadFilesPics\248bf3ae-d5fe-4a8b-9e8f-debe09ec11bf504155_main.jpg" />
+    <Content Include="UploadFilesPics\54504ad0-214f-45b5-8414-31ac7c4f568fimages.jpg" />
+    <Content Include="UploadFilesPics\58021f6c-400d-40e0-ae5b-15bcffc602b8504155_main.jpg" />
+    <Content Include="UploadFilesPics\60dd391a-5734-4004-8ed5-290dcdd5de47504155_main.jpg" />
+    <Content Include="UploadFilesPics\6b734078-58ae-47b2-b30e-89fdbac3a7b4images.jpg" />
+    <Content Include="UploadFilesPics\84d9cb49-2226-49d0-853f-0028ac0e264fimages.jpg" />
+    <Content Include="UploadFilesPics\891c012e-b5e6-4a13-9987-b2ef3e85aee3images.jpg" />
+    <Content Include="UploadFilesPics\92ac2661-3da4-4493-9ad4-11902f2437c3504155_main.jpg" />
+    <Content Include="UploadFilesPics\9bb799fb-47aa-4647-8341-5a17be9bf3d7images.jpg" />
+    <Content Include="UploadFilesPics\9eb1606d-d281-4e9e-8135-0c72ab45ee54504155_main.jpg" />
+    <Content Include="UploadFilesPics\a6efc520-9597-4ff1-b4ed-e36111f84d3b504155_main.jpg" />
+    <Content Include="UploadFilesPics\afc6d346-4f86-48d6-8e87-70e07183b4c3images.jpg" />
+    <Content Include="UploadFilesPics\b5491872-4bb2-4d65-809d-99b3953a8a7d504155_main.jpg" />
+    <Content Include="UploadFilesPics\bb14c3de-3409-4670-86e5-24dc3785b005504155_main.jpg" />
+    <Content Include="UploadFilesPics\bd0cc3d5-55b9-4692-86c1-9096fccb22d3images.jpg" />
+    <Content Include="UploadFilesPics\cafdc55f-2dbb-4581-8ae7-2d05a03e101b504155_main.jpg" />
+    <Content Include="UploadFilesPics\ce71bd4d-f6b1-429e-87c5-e4e348ddbfcb504155_main.jpg" />
+    <Content Include="UploadFilesPics\d83fba86-98d4-4e92-a1b2-41568d553e6bimages.jpg" />
+    <Content Include="UploadFilesPics\ebcf30c2-cdc7-4b4a-9266-894b438ec61fimages.jpg" />
+    <Content Include="UploadFilesPics\f2540a2c-f31d-49e9-821f-b52f9e2f1f9a504155_main.jpg" />
+    <Content Include="UploadFilesPics\ffeeb61f-538f-4b1a-a199-35e42ce5e359504155_main.jpg" />
     <Content Include="wm.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
