@@ -257,7 +257,7 @@ namespace CarDumpApp.Controllers
             //select COUNT(*) from CarDumps
 
 
-            return db.CarDumps.Count();
+            return db.CarDumps.Count(c=>c.Checked==true);
         }
 
     }
