@@ -1,0 +1,20 @@
+﻿
+@using Microsoft.AspNet.Identity
+@model IEnumerable<CarDumpApp.Models.CarDumpSet>
+
+@Html.ActionLink("Create new", "Create",null, new {@class="btn btn-success" })
+
+
+<ul class="list-group">
+    @foreach(var item in Model)
+    {
+        <li class="list-group-item">
+            @item.AutoModel.AutoBrand.Name
+            @item.AutoModel.Name
+            @item.Year
+            @item.Description
+            @Html.ActionLink("Edit", "EditSet", new { @SetItem = item.Id })
+        </li>
+    }
+
+</ul>

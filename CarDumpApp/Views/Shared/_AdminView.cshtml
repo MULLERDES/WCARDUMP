@@ -3,11 +3,14 @@
     ViewBag.Title = "_AdminView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{Html.RenderAction("FullMenu", "AdminPanel", null); }
 
-<h2>_AdminView</h2>
+<div class="container">
 
+    @RenderBody()
+</div>
 
+@section scripts{ 
+        @RenderSection("scripts", required: false)
+}
 
-    @{Html.RenderAction("FullMenu", "AdminPanel", null); }
-
-@RenderBody()

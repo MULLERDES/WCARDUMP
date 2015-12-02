@@ -53,6 +53,7 @@ namespace CarDumpApp.Controllers.Production
             _CarDump.Pic1Url = img1;
             _CarDump.Pic2Url = img2;
             _CarDump.PostedUserID = User.Identity.GetUserId();
+            _CarDump.CreatedDate = DateTime.Now;
             if(_CarDump.Id == 0)
             {
                 db.CarDumps.Add(_CarDump);

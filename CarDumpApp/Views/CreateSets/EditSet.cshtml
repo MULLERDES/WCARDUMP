@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNet.Identity
+@model CarDumpApp.Models.CreateSetViewModel
+
+
+
+
+<div class="container">
+
+    <div class="row">
+        @Html.Partial("EditSetPartial", Model)
+
+    </div>
+   
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <h3>Click on item below to add to set</h3>
+
+        @{Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
+            {
+                userId = User.Identity.GetUserId(),
+                modelID = Model?.CDSet?.ModelId,
+                year = Model?.CDSet?.Year
+            });}
+    </div>
+    
+
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+     
+
+        $(".trline").click(function () {
+            var id = $("#SID").val();
+            var cardumpid = $(this).find('td:first').attr('cid');
+            var act = "add";
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditSet")/?SetItem='+id+'&cditem='+cardumpid+'&saction='+act,
+                success: function (data) {
+                    $('#EditSetPartialView').replaceWith(data);
+
+                    $(".rembtn").click(initDel);
+
+                   }
+               ,
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+
+
+        });
+
+        
+        function initDel() {
+            var id = $("#SID").val();
+            var cdid = $(this).attr("cdid");
+            var act = "rem";
+          //  alert(cdid+" "+id);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditSet")/?SetItem=' + id + '&cditem=' + cdid + '&saction=' + act,
+                success: function (data) {
+ 
+                    $('#EditSetPartialView').replaceWith(data);
+                    $(".rembtn").click(initDel);
+                }
+              ,
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+
+        }
+        $(".rembtn").click(initDel);
+        
+    </script>
+
+}

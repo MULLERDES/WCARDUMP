@@ -177,9 +177,11 @@
     <Compile Include="Controllers\PersonalOfficeController.cs" />
     <Compile Include="Controllers\Production\CreateAutoBrandController.cs" />
     <Compile Include="Controllers\Production\CreateCarDumpRecordController.cs" />
+    <Compile Include="Controllers\Production\CreateSetsController.cs" />
     <Compile Include="Controllers\Production\MemoryTypeController.cs" />
     <Compile Include="Controllers\Production\ModuleController.cs" />
     <Compile Include="Controllers\SuperAdmin\AdminPanelController.cs" />
+    <Compile Include="Controllers\SuperAdmin\AspNetUsersController.cs" />
     <Compile Include="Controllers\SuperAdmin\AutoBrandsAdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\AutoModelsAdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\MemoryTypesAdminController.cs" />
@@ -188,6 +190,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspUsers\PartialModels.cs" />
     <Compile Include="Models\AutoBrand.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
@@ -216,8 +231,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarDumpModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarDumpSet.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarDumpSet\Class1.cs" />
     <Compile Include="Models\CarDump\DomainModels.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Home\SearchResultHomeVM.cs" />
+    <Compile Include="Models\Home\SearchSetsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MemoryType.cs">
@@ -226,11 +249,30 @@
     <Compile Include="Models\Module.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SetItem.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StoredFile.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsersModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Models\CreateSet\CreateSetViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\aspnet-CarDumpApp-20151116035145.mdf" />
@@ -239,6 +281,10 @@
     </Content>
     <Content Include="App_Data\CarDumpDatabase.mdf" />
     <Content Include="App_Data\CarDumpDatabase_log.ldf">
+      <DependentUpon>CarDumpDatabase.mdf</DependentUpon>
+    </Content>
+    <Content Include="backups\CarDumpDatabase.mdf" />
+    <Content Include="backups\CarDumpDatabase_log.ldf">
       <DependentUpon>CarDumpDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
@@ -269,11 +315,22 @@
       <DependentUpon>CarDumpModel.edmx</DependentUpon>
       <LastGenOutput>CarDumpModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\UsersModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+      <LastGenOutput>UsersModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\UsersModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+      <LastGenOutput>UsersModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Resource Include="wm.png">
+    <Content Include="TODO.txt" />
+    <Content Include="wm.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <EntityDeploy Include="Models\CarDumpModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CarDumpModel.Designer.cs</LastGenOutput>
@@ -282,6 +339,14 @@
       <DependentUpon>CarDumpModel.edmx</DependentUpon>
     </Content>
     <Content Include="Images\Home\Thumbs.db" />
+    <EntityDeploy Include="Models\UsersModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UsersModel.edmx.diagram">
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\111.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -413,7 +478,9 @@
     <Content Include="UploadFilesPics\f807e77f-3a72-493e-ab28-4ee03d0dbce2no photo.jpg" />
     <Content Include="UploadFilesPics\f93078c6-b06a-43f6-afab-a9916533ebf70018м.jpg" />
     <Content Include="UploadFilesPics\f9bbe787-d03b-4701-9a40-385eb973663420140624_001м.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -492,6 +559,19 @@
     <Content Include="Views\Home\GetAllModules.cshtml" />
     <Content Include="Views\Home\GetAllMemoryTypes.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
+    <Content Include="Views\CreateSets\Index.cshtml" />
+    <Content Include="Views\CreateSets\Create.cshtml" />
+    <Content Include="Views\CreateSets\EditSet.cshtml" />
+    <Content Include="Views\CreateSets\EditSetPartial.cshtml" />
+    <Content Include="Views\CreateSets\IndexPartial.cshtml" />
+    <Content Include="Views\AspNetUsers\Delete.cshtml" />
+    <Content Include="Views\AspNetUsers\Details.cshtml" />
+    <Content Include="Views\AspNetUsers\Edit.cshtml" />
+    <Content Include="Views\AspNetUsers\Index.cshtml" />
+    <Content Include="Views\AdminPanel\CheckUnchecked.cshtml" />
+    <Content Include="Views\Home\CompleteSets.cshtml" />
+    <Content Include="Views\Home\SearchResultSets.cshtml" />
+    <Content Include="Views\Home\SetDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

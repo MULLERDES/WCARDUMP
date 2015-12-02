@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<CarDumpApp.Models.CarDumpSet>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+<h2>List of sets</h2>
+@Html.ActionLink("Create new","Create");
+
+
+<ul class="list-group">
+    @foreach(var item in Model)
+    {
+        <li class="list-group-item">
+            @item.AutoModel.Name
+            @Html.ActionLink("Edit", "EditSet", new { @SetItem=item.Id });
+        </li>
+
+    }
+
+</ul>

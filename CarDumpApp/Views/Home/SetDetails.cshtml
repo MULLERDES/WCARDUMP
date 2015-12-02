@@ -1,0 +1,97 @@
+﻿@model CarDumpApp.Models.CardumpSetDetailsViewModel
+@{
+    string sTitle = $"Dump set for {Model.Set.AutoModel.AutoBrand.Name} {Model.Set.AutoModel.Name} {Model.Set.Year}";
+    ViewBag.Title = sTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>
+        @sTitle
+    </h2>
+    <p>
+
+    </p>
+    @foreach(var item in Model.CarDumps)
+    {
+
+        //string sTitle = $"{item.AutoModel.AutoBrand.Name} {item.AutoModel.Name} {item.Year.ToString()} {item.Module.Name} {item.MemoryType.Name}";
+        <div class="row">
+            <hr />
+            <div class="col-sm-6">
+               
+                  
+                  
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Block
+                        </dt>
+
+                        <dd>
+                            @item.Module.Name
+                        </dd>
+                        <dt>
+                            Memory type
+                        </dt>
+
+                        <dd>
+                            @item.MemoryType.Name
+                        </dd>
+
+                        <dt>
+                            Part number
+                        </dt>
+
+                        <dd>
+                            @item.ModuleNumber
+                        </dd>
+                        <dt>
+                            File URL
+                        </dt>
+
+                        <dd>
+                            @Html.ActionLink("Загрузить файл", "FileDownload", new { parentid = item.Id }, null)
+                        </dd>
+                        <dt>
+                            Status
+                        </dt>
+
+                        <dd>
+                            @*проверена / не проверена*@ undefined
+                        </dd>
+
+                        <dt>
+                            Description
+                        </dt>
+
+                        <dd>
+                            @item.Description
+                        </dd>
+
+                    </dl>
+                 
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" style="width:200px;  " src="/UploadFilesPics/@item.Pic1Url" />
+                        <p> Label image</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" style="width:200px;  " src="/UploadFilesPics/@item.Pic2Url" />
+                        <p> Module photo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+       
+
+    }
+</div>
+
+

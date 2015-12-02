@@ -44,6 +44,18 @@
           <Property Name="Pic2Url" Type="nvarchar(max)" />
           <Property Name="PostedUserID" Type="nvarchar" MaxLength="128" />
           <Property Name="AccessLevelID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarDumpSets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModelId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="PostedUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="MemoryTypes">
           <Key>
@@ -58,6 +70,14 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SetItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarDumpSetID" Type="int" Nullable="false" />
+          <Property Name="CarDumpID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="StoredFiles">
           <Key>
@@ -89,6 +109,42 @@
             </Principal>
             <Dependent Role="AutoModels">
               <PropertyRef Name="AutoBrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarDumpSets_ToModels">
+          <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="1" />
+          <End Role="CarDumpSets" Type="Self.CarDumpSets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumpSets">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetItems_ToCarDumps">
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="1" />
+          <End Role="SetItems" Type="Self.SetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDumps">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetItems">
+              <PropertyRef Name="CarDumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetItems_ToSets">
+          <End Role="CarDumpSets" Type="Self.CarDumpSets" Multiplicity="1" />
+          <End Role="SetItems" Type="Self.SetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDumpSets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetItems">
+              <PropertyRef Name="CarDumpSetID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -133,8 +189,10 @@
           <EntitySet Name="AutoModels" EntityType="Self.AutoModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDumpAccessLevel" EntityType="Self.CarDumpAccessLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDumps" EntityType="Self.CarDumps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarDumpSets" EntityType="Self.CarDumpSets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemoryTypes" EntityType="Self.MemoryTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SetItems" EntityType="Self.SetItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StoredFiles" EntityType="Self.StoredFiles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_accesslevel_cd" Association="Self.FK_accesslevel_cd">
             <End Role="CarDumpAccessLevel" EntitySet="CarDumpAccessLevel" />
@@ -143,6 +201,18 @@
           <AssociationSet Name="FK_AutoModels_ToTable" Association="Self.FK_AutoModels_ToTable">
             <End Role="AutoBrands" EntitySet="AutoBrands" />
             <End Role="AutoModels" EntitySet="AutoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarDumpSets_ToModels" Association="Self.FK_CarDumpSets_ToModels">
+            <End Role="AutoModels" EntitySet="AutoModels" />
+            <End Role="CarDumpSets" EntitySet="CarDumpSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetItems_ToCarDumps" Association="Self.FK_SetItems_ToCarDumps">
+            <End Role="CarDumps" EntitySet="CarDumps" />
+            <End Role="SetItems" EntitySet="SetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetItems_ToSets" Association="Self.FK_SetItems_ToSets">
+            <End Role="CarDumpSets" EntitySet="CarDumpSets" />
+            <End Role="SetItems" EntitySet="SetItems" />
           </AssociationSet>
           <AssociationSet Name="FK_T_ToAutoModel" Association="Self.FK_T_ToAutoModel">
             <End Role="AutoModels" EntitySet="AutoModels" />
@@ -178,6 +248,7 @@
           <Property Name="AutoBrandID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AutoBrand" Relationship="Self.FK_AutoModels_ToTable" FromRole="AutoModels" ToRole="AutoBrands" />
           <NavigationProperty Name="CarDumps" Relationship="Self.FK_T_ToAutoModel" FromRole="AutoModels" ToRole="CarDumps" />
+          <NavigationProperty Name="CarDumpSets" Relationship="CarDumpDatabaseModel.FK_CarDumpSets_ToModels" FromRole="AutoModel" ToRole="CarDumpSet" />
         </EntityType>
         <EntityType Name="CarDump">
           <Key>
@@ -200,6 +271,8 @@
           <Property Name="PostedUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CarDumpAccessLevel" Relationship="CarDumpDatabaseModel.FK_accesslevel_cd" FromRole="CarDump" ToRole="CarDumpAccessLevel" />
+          <NavigationProperty Name="SetItems" Relationship="CarDumpDatabaseModel.FK_SetItems_ToCarDumps" FromRole="CarDump" ToRole="SetItem" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="MemoryType">
           <Key>
@@ -293,6 +366,20 @@
             <End Role="CarDumpAccessLevel" EntitySet="CarDumpAccessLevels" />
             <End Role="CarDump" EntitySet="CarDumps" />
           </AssociationSet>
+          <EntitySet Name="CarDumpSets" EntityType="CarDumpDatabaseModel.CarDumpSet" />
+          <EntitySet Name="SetItems" EntityType="CarDumpDatabaseModel.SetItem" />
+          <AssociationSet Name="FK_CarDumpSets_ToModels" Association="CarDumpDatabaseModel.FK_CarDumpSets_ToModels">
+            <End Role="AutoModel" EntitySet="AutoModels" />
+            <End Role="CarDumpSet" EntitySet="CarDumpSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetItems_ToCarDumps" Association="CarDumpDatabaseModel.FK_SetItems_ToCarDumps">
+            <End Role="CarDump" EntitySet="CarDumps" />
+            <End Role="SetItem" EntitySet="SetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetItems_ToSets" Association="CarDumpDatabaseModel.FK_SetItems_ToSets">
+            <End Role="CarDumpSet" EntitySet="CarDumpSets" />
+            <End Role="SetItem" EntitySet="SetItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StoredFile">
           <Key>
@@ -323,6 +410,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CarDumpSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AutoModel" Relationship="CarDumpDatabaseModel.FK_CarDumpSets_ToModels" FromRole="CarDumpSet" ToRole="AutoModel" />
+          <NavigationProperty Name="SetItems" Relationship="CarDumpDatabaseModel.FK_SetItems_ToSets" FromRole="CarDumpSet" ToRole="SetItem" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="PostedUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SetItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarDumpSetID" Type="Int32" Nullable="false" />
+          <Property Name="CarDumpID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarDump" Relationship="CarDumpDatabaseModel.FK_SetItems_ToCarDumps" FromRole="SetItem" ToRole="CarDump" />
+          <NavigationProperty Name="CarDumpSet" Relationship="CarDumpDatabaseModel.FK_SetItems_ToSets" FromRole="SetItem" ToRole="CarDumpSet" />
+        </EntityType>
+        <Association Name="FK_CarDumpSets_ToModels">
+          <End Type="CarDumpDatabaseModel.AutoModel" Role="AutoModel" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.CarDumpSet" Role="CarDumpSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumpSet">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetItems_ToCarDumps">
+          <End Type="CarDumpDatabaseModel.CarDump" Role="CarDump" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.SetItem" Role="SetItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDump">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetItem">
+              <PropertyRef Name="CarDumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetItems_ToSets">
+          <End Type="CarDumpDatabaseModel.CarDumpSet" Role="CarDumpSet" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.SetItem" Role="SetItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarDumpSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetItem">
+              <PropertyRef Name="CarDumpSetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -349,6 +495,7 @@
           <EntitySetMapping Name="CarDumps">
             <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDump">
               <MappingFragment StoreEntitySet="CarDumps">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
                 <ScalarProperty Name="PostedUserID" ColumnName="PostedUserID" />
                 <ScalarProperty Name="Pic2Url" ColumnName="Pic2Url" />
@@ -395,6 +542,27 @@
             <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDumpAccessLevel">
               <MappingFragment StoreEntitySet="CarDumpAccessLevel">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarDumpSets">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDumpSet">
+              <MappingFragment StoreEntitySet="CarDumpSets">
+                <ScalarProperty Name="PostedUserID" ColumnName="PostedUserID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SetItems">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.SetItem">
+              <MappingFragment StoreEntitySet="SetItems">
+                <ScalarProperty Name="CarDumpID" ColumnName="CarDumpID" />
+                <ScalarProperty Name="CarDumpSetID" ColumnName="CarDumpSetID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

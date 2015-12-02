@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CarDumpApp.Models.CarDump>
+
+<div class="container">
+
+
+    @using(Html.BeginForm("CheckUnchecked", "AdminPanel", FormMethod.Get))
+    {
+        <ul class="list-group">
+            @foreach(var item in Model)
+            {
+                
+                <li class="list-group-item" style="margin:2px;">
+                    
+                    <button type="submit" name="sid" value="@item.Id">Check</button>
+
+                    @item.PostedUser.UserName
+
+                    @item.AutoModel.AutoBrand.Name
+                    @item.AutoModel.Name
+                    @item.Year
+                    @item.Description
+
+                    @item.ModuleNumber
+
+                    @Html.ActionLink("Details", "Details", "Home", new { @id = @item.Id }, null)
+
+                </li>
+            }
+        </ul>
+
+    }
+</div>

@@ -1,22 +1,50 @@
 ﻿
 @if (User.IsInRole("Admin"))
 {
-     
-<div style="margin-top:5px;" class="row">
-    <div class="col-sm-2">
-        <h4 style="color:#1a6358">Full access:<span class="glyphicon glyphicons-right-arrow"></span></h4>
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">full permissions panel</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div style="margin-top:5px;" class="row">
+                            <div class="col-sm-2">
+                                <h4 style="color:#1a6358">Full access:<span class="glyphicon glyphicons-right-arrow"></span></h4>
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ActionLink("Brands", "Index", "AutoBrandsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ActionLink("Models", "Index", "AutoModelsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ActionLink("Modules", "Index", "ModulesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ActionLink("Memory types", "Index", "MemoryTypesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-2">
+                                @Html.ActionLink("Users managment", "Index", "AspNetUsers", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ActionLink("New dumps", "CheckUnchecked", "AdminPanel", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Brands", "Index", "AutoBrandsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Models", "Index", "AutoModelsAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Modules", "Index", "ModulesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" })
-    </div>
-    <div class="col-sm-2">
-        @Html.ActionLink("Типы памяти", "Index", "MemoryTypesAdmin", null, new { @class = "btn btn-default btn-block ", style = "color:#1a6358;border-color:#1a6358" });
-    </div>
-</div>
 }
+
+

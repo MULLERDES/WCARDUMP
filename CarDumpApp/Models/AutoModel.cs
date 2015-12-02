@@ -18,6 +18,7 @@ namespace CarDumpApp.Models
         public AutoModel()
         {
             this.CarDumps = new HashSet<CarDump>();
+            this.CarDumpSets = new HashSet<CarDumpSet>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace CarDumpApp.Models
         public virtual AutoBrand AutoBrand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CarDump> CarDumps { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CarDumpSet> CarDumpSets { get; set; }
     }
 }

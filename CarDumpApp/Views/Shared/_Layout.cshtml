@@ -23,6 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Complete sets", "CompleteSets", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("News", "Index", "News")</li>
                     <li>@Html.ActionLink("Contacts", "Contact", "Home")</li>
@@ -32,27 +33,39 @@
         </div>
     </div>
 
-    <header class="jumbotron" style="background-image: url('../../Images/Home/phon4.png'); margin-top:-50px;">
+    <header class="jumbotron" style="background-image: url('../../Images/Home/phon4.png'); margin-top:-50px; margin-bottom:0px;">
         <div class="container">
-            <h1>
-                @Html.ActionLink("CARDUMP", "Index", "Home", new { area = "" }, new { style = "font-weight: bold; color:#ffffff; font-family: times; " })
-            </h1>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>
+                        @Html.ActionLink("MASTERDUMP", "Index", "Home", new { area = "" }, new { style = "font-weight: bold; color:#ffffff; font-family: times; " })
+                    </h1>
+                    
+                </div>
+                <div class="col-sm-6  ">
+                    <span style="color:#ffffff">@{Html.RenderAction("NumerOfAllCarDumps", "Home"); } files ready</span>
+                </div>
+            </div>
+
             <p class="lead" style="color:#ffffff">
+
+
                 Airbag, Dash, ECU, SRS, etc. Repair Information Database. EEPROM, FLASH files database
-            @*Сотки полезных прошивок, дампов, eeprom, flash, полезные выкладки для мастеров автомобильной электроники*@
+                @*Сотки полезных прошивок, дампов, eeprom, flash, полезные выкладки для мастеров автомобильной электроники*@
             </p>
+           
 
 
-       
 
         </div>
     </header>
 
-    <div class="container body-content">
-        @RenderBody()
+    @RenderBody()
+
+    <div class="container body-content ">
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+        <footer style="text-align:center;">
+            <p>&copy; @DateTime.Now.Year – MASTERDUMP  </p>
         </footer>
     </div>
 

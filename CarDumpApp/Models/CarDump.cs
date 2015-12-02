@@ -14,6 +14,12 @@ namespace CarDumpApp.Models
     
     public partial class CarDump
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CarDump()
+        {
+            this.SetItems = new HashSet<SetItem>();
+        }
+    
         public int Id { get; set; }
         public int AutoModelId { get; set; }
         public int Year { get; set; }
@@ -27,10 +33,13 @@ namespace CarDumpApp.Models
         public string Pic2Url { get; set; }
         public string PostedUserID { get; set; }
         public int AccessLevelID { get; set; }
+        public System.DateTime CreatedDate { get; set; }
     
         public virtual AutoModel AutoModel { get; set; }
         public virtual MemoryType MemoryType { get; set; }
         public virtual Module Module { get; set; }
         public virtual CarDumpAccessLevel CarDumpAccessLevel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SetItem> SetItems { get; set; }
     }
 }

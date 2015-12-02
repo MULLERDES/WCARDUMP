@@ -1,0 +1,53 @@
+﻿@model CarDumpApp.Models.SearchSetsViewModel
+
+
+<div class="container" id="SearchResultSets" style="margin-top:20px;">
+
+    <table class="table">
+        <tr style="background-color:#1a6358;color:#ffffff;">
+            <th>
+                Id
+            </th>
+            <th>
+                Brand
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+                
+            </th>
+            <th>
+               
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach(var item in Model.Sets)
+        {
+            <tr>
+                <td>
+                    @item.PersonalNumber
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AutoModel.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                 
+                
+                <td>
+                    @Html.ActionLink("Details", "SetDetails", new { id = item.Id }) 
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

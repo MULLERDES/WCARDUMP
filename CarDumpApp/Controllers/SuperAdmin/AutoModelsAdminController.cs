@@ -17,7 +17,7 @@ namespace CarDumpApp.Controllers.SuperAdmin
         // GET: AutoModelsAdmin
         public ActionResult Index()
         {
-            var autoModels = db.AutoModels.Include(a => a.AutoBrand);
+            var autoModels = db.AutoModels.Include(a => a.AutoBrand).OrderBy(ob=>ob.AutoBrand.Name);
             return View(autoModels.ToList());
         }
 

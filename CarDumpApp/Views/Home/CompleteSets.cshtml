@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "CompleteSets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:100%; height:100px; background-color:rgba(156, 156, 156, 0.27); margin-bottom:-75px;"> </div>
+
+
+<div class="container">
+
+
+
+    <div class="row">
+        <div style="margin-right:15px;" class=" col-sm-2 col-sm-offset-1 ">
+            @*Просто выпадающий список марок машин*@
+            @{Html.RenderAction("GetAllBrands");}
+        </div>
+        <div style="margin-right:15px;" class="col-sm-2 ">
+            @*Выпадающий список моделей по выбраной марке*@
+            @{Html.RenderAction("GetModelsByBrand");}
+        </div>
+        <div style="margin-right:15px;" class="col-sm-2">
+            @*Типы модулей*@
+            @{ Html.RenderAction("GetAllModules");}
+        </div>
+        <div style="margin-right:15px;" class="col-sm-2">
+            @*Типы модулей*@
+            @{ Html.RenderAction("GetAllMemoryTypes");}
+        </div>
+        <div class="col-sm-2 ">
+            @*Кнопка поиска*@
+            <button style="background-color:#1a6358; color:white; border-color:#1a6358" class="btn" id="BSearch">Search</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        @{ Html.RenderAction("SearchResultSets");}
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        var curretntPage = 0;
+
+        $(function () { curretntPage = 0; });
+
+        $(function () {
+            $('#AllBrands').change(
+                function () {
+                    var idbr = $(this).val();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetModelsByBrand")/?idbr=' + idbr,
+                        success: function (data) {
+                            $('#ModelsByBrand').replaceWith(data);
+                        }
+                        ,
+                        error: function (xhr, status, p3) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                });
+
+            $("#BSearch").click(
+                function () {
+                    curretntPage = 0;
+                    loaddata();
+                });
+            $("#BNextButton").click(
+                function () {
+                    curretntPage++;
+                    loaddata();
+                });
+
+            $("#BPrewButton").click(
+                         function () {
+                             if (curretntPage > 0)
+                                 curretntPage--;
+                             loaddata();
+                         });
+
+
+
+        })
+
+        function loaddata() {
+            var idbr = $("#AllBrands").val();
+            var idmodel = $("#ModelsByBrand").val();
+            var idmodule = $("#AllModules").val();
+            var idmemory = $("#AllMemoryTypes").val();
+
+            var brs = '&brandid=' + idbr;
+            if (idbr == 0) brs = '';
+            var smodels = '&modelid=' + idmodel;
+            if (idmodel == 0) smodels = '';
+            var modules = '&moduleid=' + idmodule;
+            if (idmodule == 0) modules = '';
+            var memorys = '&memoryid=' + idmemory;
+            if (idmemory == 0) memorys = '';
+            //alert(brs+ smodels+modules+memorys);
+            var pg = 'page=' + curretntPage;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("SearchResultSets")/?' + pg + brs + smodels,
+                success: function (data) {
+                    $('#SearchResultSets').replaceWith(data);
+                    //alert(data);
+                }
+                ,
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+    }

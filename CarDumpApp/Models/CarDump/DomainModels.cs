@@ -20,6 +20,18 @@ namespace CarDumpApp.Models
     }
 
 
+    public partial class CarDump
+    {
+        public AspNetUser PostedUser { get; set; }
+        public string PersonalNumber
+        {
+            get
+            {
+                return Id.ToString("D6");
+            }
+        }
 
+    }
+    
     
 }

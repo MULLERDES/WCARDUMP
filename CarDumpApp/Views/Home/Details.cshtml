@@ -7,72 +7,74 @@
 }
 
 
- 
+ <div class="container">
+     <div>
+         <h2>@sTitle</h2>
+         <hr />
+         <dl class="dl-horizontal">
+             <dt>
+                 Block
+             </dt>
 
-<div>
-    <h2>@sTitle</h2>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Block 
-        </dt>
+             <dd>
+                 @Html.DisplayFor(model => model.Module.Name)
+             </dd>
+             <dt>
+                 Memory type
+             </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Module.Name)
-        </dd>
-        <dt>
-            Memory type
-        </dt>
+             <dd>
+                 @Html.DisplayFor(model => model.MemoryType.Name)
+             </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.MemoryType.Name)
-        </dd>
+             <dt>
+                 Part number
+             </dt>
 
-        <dt>
-            Part number
-        </dt>
+             <dd>
+                 @Html.DisplayFor(model => model.ModuleNumber)
+             </dd>
+             <dt>
+                 File URL
+             </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleNumber)
-        </dd>
-        <dt>
-            File URL
-        </dt>
+             <dd>
+                 @Html.ActionLink("Загрузить файл", "FileDownload", new { parentid = Model.Id }, null);
+             </dd>
+             <dt>
+                 Status
+             </dt>
 
-        <dd>
-            @Html.ActionLink("Загрузить файл", "FileDownload",new { parentid = Model.Id }, null);
-        </dd>
-        <dt>
-            Status
-        </dt>
+             <dd>
+                 @*проверена / не проверена*@ undefined
+             </dd>
 
-        <dd>
-            проверена / не проверена
-        </dd>
+             <dt>
+                 Description
+             </dt>
 
-        <dt>
-            Description
-        </dt>
+             <dd>
+                 @Html.DisplayFor(model => model.Description)
+             </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-      
-    </dl>
-</div>
+         </dl>
+     </div>
 
-<div class="row">
- 
-        <div class="col-sm-6">
-            <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
-            <p> Label image</p>
-        </div>
- 
-    <div class="col-sm-6">
-        <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
-        <p> Module photo</p>
-    </div>
-</div>
+     <div class="row">
 
- 
+         <div class="col-sm-6">
+             <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
+             <p> Label image</p>
+         </div>
+
+         <div class="col-sm-6">
+             <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
+             <p> Module photo</p>
+         </div>
+     </div>
+
+
+
+ </div>
+
 

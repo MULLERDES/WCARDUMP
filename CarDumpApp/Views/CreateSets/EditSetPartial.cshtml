@@ -1,0 +1,27 @@
+﻿@model CarDumpApp.Models.CreateSetViewModel
+
+
+<div id="EditSetPartialView">
+
+    <h4>@Model.CDSet.AutoModel.AutoBrand.Name @Model.CDSet.AutoModel.Name @Model.CDSet.Year  </h4>
+    <input type="text" value="@Model.CDSet.Id" id="SID" hidden />
+    <h2>This is list of files in Set</h2>
+
+    <ul>
+        @foreach(var item in Model.CDSet.SetItems)
+        {
+            <li>
+                @Html.ActionLink(item.CarDump.PersonalNumber, "Create", "CreateCarDumpRecord", null, new { id= item.Id }) |
+               
+                @item.CarDump.Module.Name |
+                @item.CarDump.ModuleNumber |
+                @item.CarDump.AutoModel.Name |
+                @item.CarDump.AutoModel.AutoBrand.Name |
+
+                @item.CarDump.ModuleNumber
+
+                <span class="rembtn" cdid="@item.Id" style="color:red; cursor:pointer;">remove from set</span>
+            </li>
+        }
+    </ul>
+</div>

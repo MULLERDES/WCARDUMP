@@ -13,10 +13,15 @@ namespace CarDumpApp.Controllers
         CarDumpDatabaseEntities db = new CarDumpDatabaseEntities();
         public ActionResult Index()
         {
-
             return View();
             //return RedirectToAction("Search");
         }
+
+        public ActionResult CompleteSets()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult GetModelsByBrand(int? idbr)
         {
@@ -31,7 +36,7 @@ namespace CarDumpApp.Controllers
         [HttpGet]
         public ActionResult GetAllBrands()
         {
-            List<AutoBrand> itms = db.AutoBrands.OrderBy(tf=>tf.Name).ToList();
+            List<AutoBrand> itms = db.AutoBrands.OrderBy(tf => tf.Name).ToList();
             itms.Insert(0, new AutoBrand() { Id = 0, Name = "Brand" });
             ViewBag.AllBrands = new SelectList(itms, "Id", "Name");
             return PartialView();
@@ -55,7 +60,7 @@ namespace CarDumpApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult SearchResult(int? page,int? brandid, int? modelid, int? moduleid, int? memoryid)
+        public ActionResult SearchResult(int? page, int? brandid, int? modelid, int? moduleid, int? memoryid)
         {
             SearchResultHomeVM mdl = new SearchResultHomeVM();
 
@@ -63,14 +68,38 @@ namespace CarDumpApp.Controllers
             List<CarDump> RetValue = new List<CarDump>();
 
             RetValue.AddRange(
-                db.CarDumps.Where(tf => ((modelid == null) ? ((brandid==null)?true:(brandid==0?true:tf.AutoModel.AutoBrandID==brandid)) :(modelid==0?(brandid==null?true:tf.AutoModel.AutoBrandID==brandid): tf.AutoModelId == modelid) )&&
+                db.CarDumps.Where(tf => ((modelid == null) ? ((brandid == null) ? true : (brandid == 0 ? true : tf.AutoModel.AutoBrandID == brandid)) : (modelid == 0 ? (brandid == null ? true : tf.AutoModel.AutoBrandID == brandid) : tf.AutoModelId == modelid)) &&
                 ((moduleid == null) ? true : tf.ModuleID == moduleid) &&
+                (tf.Checked == true) &&
+                (tf.AccessLevelID == 1) &&
                 ((memoryid == null) ? true : tf.MemoryTypeID == memoryid)
-                                ).OrderBy(tf => tf.Id).Skip((page == null) ? 0 : ((int)page)*perpageCount).Take(perpageCount).ToArray()
+                                ).OrderByDescending(tf => tf.Id).Skip((page == null) ? 0 : ((int)page) * perpageCount).Take(perpageCount).ToArray()
                 );
 
             mdl.Cardumps = RetValue;
-            mdl.CurrentPage = page== null?0:(int)page;
+            mdl.CurrentPage = page == null ? 0 : (int)page;
+            return PartialView(mdl);
+        }
+
+        [HttpGet]
+        public ActionResult SearchResultSets(int? page, int? brandid, int? modelid, int? year)
+        {
+            SearchSetsViewModel mdl = new SearchSetsViewModel();
+
+            int perpageCount = SearchSetsViewModel.PerPageNumber;
+            List<CarDumpSet> RetValue = new List<CarDumpSet>();
+
+            RetValue.AddRange(
+                db.CarDumpSets.Where(tf =>
+                ((modelid == null) ? ((brandid == null) ? true : (brandid == 0 ? true : tf.AutoModel.AutoBrandID == brandid)) : (modelid == 0 ? (brandid == null ? true : tf.AutoModel.AutoBrandID == brandid) : tf.ModelId == modelid)) &&
+                ((year == null) ? true : tf.Year == year)
+                ).OrderByDescending(tf => tf.Id).Skip((page == null) ? 0 : ((int)page) * perpageCount).Take(perpageCount).ToArray()
+                );
+
+            mdl.Sets = RetValue;
+
+            mdl.CurrentPage = page == null ? 0 : (int)page;
+
             return PartialView(mdl);
         }
 
@@ -145,17 +174,54 @@ namespace CarDumpApp.Controllers
 
         public ActionResult Details(int? id)
         {
-            if(id == null)
+            try
+            {
+                if(id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CarDump cd = (from s in db.CarDumps where s.Id == id select s).ToList()[0];
+                if(cd == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cd);
+            }
+            catch(Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CarDump cd = (from s in db.CarDumps where s.Id == id select s).ToList()[0];
-            if(cd == null)
+
+        }
+
+
+        public ActionResult SetDetails(int? id)
+        {
+            try
+            {
+                if(id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CardumpSetDetailsViewModel mdl = new CardumpSetDetailsViewModel();
+                mdl.Set = db.CarDumpSets.Where(tf => tf.Id == id).First();
+                List<SetItem> SI = db.SetItems.Where(tf => tf.CarDumpSetID == mdl.Set.Id).ToList();
+
+                mdl.CarDumps = new List<CarDump>();
+                foreach(var item in SI)
+                {
+                    mdl.CarDumps.Add(item.CarDump);
+                }
+
+              
+                return View(mdl);
+            }
+            catch(Exception)
             {
                 return HttpNotFound();
             }
-            return View(cd);
         }
+
 
 
         public FileContentResult FileDownload(int parentid)
@@ -184,6 +250,15 @@ namespace CarDumpApp.Controllers
 
 
         //partial view result
+
+        [HttpGet]
+        public int NumerOfAllCarDumps()
+        {
+            //select COUNT(*) from CarDumps
+
+
+            return db.CarDumps.Count();
+        }
 
     }
 }

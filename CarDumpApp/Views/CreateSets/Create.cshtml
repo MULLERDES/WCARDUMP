@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+
+<h3>Click on item below to create set</h3>
+
+@{Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
+    {
+        userId = User.Identity.GetUserId()
+    });}
+
+
+
+@section scripts{
+ 
+    <script type="text/javascript">
+        $(".trline").click(function () {
+            var s1 = $(this).find('td:first').attr('cid');
+            var navS = '@Url.Action("Create")' + '/?cardumpitem=' + s1;
+            //  alert(navS);
+            //$(location).attr('href', navS);
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create")/?cardumpitem='+s1,
+                success: function (data) {
+                    //$('#SearchResult').replaceWith(data);
+                    //alert(data);
+                    if (data!=-1)
+                    $(location).attr('href', '@Url.Action("EditSet")/?SetItem='+data);
+                }
+               ,
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+
+
+        });
+    </script>
+ 
+    }
