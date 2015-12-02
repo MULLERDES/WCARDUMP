@@ -5,7 +5,7 @@
 
     <table class="table">
         <tr style="background-color:#1a6358;color:#ffffff;">
-            <th>
+            <th  >
                 Id
             </th>
             <th>
@@ -17,20 +17,15 @@
             <th>
                 Year
             </th>
-            <th>
-                
-            </th>
-            <th>
-               
-            </th>
+            
             <th></th>
         </tr>
 
         @foreach(var item in Model.Sets)
         {
             <tr>
-                <td>
-                    @item.PersonalNumber
+                <td >
+                 @Html.ActionLink(item.PersonalNumber,"SetDetails", new {id=item.Id})
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
@@ -43,7 +38,7 @@
                 </td>
                  
                 
-                <td>
+                <td style="text-align:right;">
                     @Html.ActionLink("Details", "SetDetails", new { id = item.Id }) 
                 </td>
             </tr>

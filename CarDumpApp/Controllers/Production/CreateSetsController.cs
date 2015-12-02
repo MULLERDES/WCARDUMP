@@ -103,23 +103,14 @@ namespace CarDumpApp.Controllers.Production
             else return HttpNotFound();
 
 
-            //if(action != null)
-            //{
-            //    switch(action)
-            //    {
-            //        case "add": break;
-            //        case "remove": break;
-            //        default: break;
-            //    }
+            
 
-            //}
-
-            return HttpNotFound();
+           
         }
 
 
         [HttpPost]
-        public ActionResult EditSet(int? SetItem, int cditem, string saction)
+        public ActionResult EditSet(int? SetItem, int? cditem, string saction)
         {
             CreateSetViewModel mdl = new CreateSetViewModel();
             if(SetItem != null)
@@ -136,7 +127,7 @@ namespace CarDumpApp.Controllers.Production
                                 if(slist.Find(tf => tf.CarDumpID == cditem) == null)
                                 {
                                     SetItem si = new Models.SetItem();
-                                    si.CarDumpID = cditem;
+                                    si.CarDumpID = (int)cditem;
                                     si.CarDumpSetID = set.Id;
                                     db.SetItems.Add(si);
                                     db.SaveChanges();
