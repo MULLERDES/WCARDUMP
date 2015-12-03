@@ -31,7 +31,25 @@ namespace CarDumpApp.Controllers.Production
             //welcome screen
             return View();
         }
-        //[HttpPost]
+
+        [HttpPost]
+        public void Save(CreateSetViewModel mdl)
+        {
+            try
+            {
+                CarDumpSet set = db.CarDumpSets.Where(tf => tf.Id == mdl.CDSet.Id).First();
+                set.Description = mdl.CDSet.Description;
+                db.Entry(set).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+          
+            }
+            catch(Exception)
+            {
+
+            }
+
+        }
+
 
         [HttpPost]
         public int Create(int cardumpitem)
@@ -104,9 +122,9 @@ namespace CarDumpApp.Controllers.Production
             else return HttpNotFound();
 
 
-            
 
-           
+
+
         }
 
 
@@ -158,7 +176,7 @@ namespace CarDumpApp.Controllers.Production
                                 db = new CarDumpDatabaseEntities();
                                 return EditSet(SetItem, 0, "");
                             }
-                            
+
                         default: break;
                     }
 

@@ -46,7 +46,7 @@ namespace CarDumpApp.Controllers.SuperAdmin
                         (accessId == null ? true : s.AccessLevelID == accessId) &&
                         ((year == null) ? true : s.Year == year) &&
                         ((modelID == null) ? true : s.AutoModelId == modelID)
-                ).OrderBy(s => s.Id).Skip(0).ToArray();
+                ).OrderByDescending(s => s.Id).Skip(0).ToArray();
             return PartialView(CD);
         }
 
@@ -79,7 +79,7 @@ namespace CarDumpApp.Controllers.SuperAdmin
                 s =>( s.Checked == false )&&(s.AccessLevelID==1)
                 ).OrderBy(s => s.Id).Skip(0).ToArray();
             List<AspNetUser> Users;
-            using(var udb= new UsersMDLConnection())
+            using(var udb= new UsersDBEntities())
             {
                 Users = udb.AspNetUsers.ToList();
                 foreach(var item in CD)

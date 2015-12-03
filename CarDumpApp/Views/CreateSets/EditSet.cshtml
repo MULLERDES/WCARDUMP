@@ -5,19 +5,28 @@
 
 
 <div class="container">
+    <div class="row">
+        <h4>@Model.CDSet.AutoModel.AutoBrand.Name @Model.CDSet.AutoModel.Name @Model.CDSet.Year  </h4>
+        @using(Html.BeginForm("Save", "CreateSets", FormMethod.Post, new { @id = "FMAIN" }))
+        {
+            @Html.HiddenFor(model => model.CDSet.Id)
+            <label>Short description about set </label>
+            <br />
+            @Html.TextAreaFor(model => model.CDSet.Description, new { rows = "10", cols = "45" })
+            <br />
+            <label id="savereturn" style="margin:4px; color:#07b415;"></label>
+            <br />
+            <input type="submit" value="Save" class="btn btn-success" />
+            @*<button name="action" value="delete">Удалить</button>*@
+        }
+    </div>
 
-    @using(Html.BeginForm("Save", "CreateSet", FormMethod.Post))
-    {
-        <label>Short description about set </label>
-        @Html.EditorFor(model => model.CDSet.Description)
 
-        <button name="action" value="Save">Save</button>
-        @*<button name="action" value="delete">Удалить</button>*@
-    }
 
 
 
     <div class="row">
+        <hr />
         @Html.Partial("EditSetPartial", Model)
 
     </div>
@@ -26,6 +35,7 @@
 
     </div>
     <div class="row">
+        <hr />
         <h3>Click on item below to add to set</h3>
 
         @{Html.RenderAction("CarDumpsListByUserId", "AdminPanel", new
@@ -46,6 +56,30 @@
 @section scripts{
 
     <script type="text/javascript">
+
+
+        $('#FMAIN').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action') || window.location.pathname,
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    //    alert('ok');
+                    // alert($('#savereturn').text());
+                    $('#savereturn').text('saved');
+                    setTimeout(function () {
+                        $('#savereturn').text('');
+                    }, 1000);
+
+
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    //    alert(errorThrown);
+                }
+            });
+        });
 
 
         $(".trline").click(function () {

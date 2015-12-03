@@ -7,6 +7,9 @@
          <thead>
              <tr style="background-color:#1a6358;color:#ffffff;">
                  <th>
+                     <label class="control-label">№</label>
+                 </th>
+                 <th>
                      <label class="control-label">Brand</label>
                  </th>
                  <th>
@@ -40,6 +43,9 @@
                  {
                      <tr class="trline" style="cursor:pointer;">
                          <td cid=@item.Id hidden></td>
+                         <td>
+                             @Html.DisplayFor(m=>item.PersonalNumber)
+                         </td>
                          <td>
                              @Html.DisplayFor(modelItem => item.AutoModel.AutoBrand.Name)
                          </td>

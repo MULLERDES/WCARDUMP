@@ -10,7 +10,7 @@
         @sTitle
     </h2>
     <p>
-
+        @Model.Set.Description
     </p>
     @foreach(var item in Model.CarDumps)
     {
@@ -46,11 +46,11 @@
                             @item.ModuleNumber
                         </dd>
                         <dt>
-                            File URL
+                            Download file:
                         </dt>
 
                         <dd>
-                            @Html.ActionLink("Загрузить файл", "FileDownload", new { parentid = item.Id }, null)
+                            @Html.ActionLink("file", "FileDownload", new { parentid = item.Id }, null)
                         </dd>
                         <dt>
                             Status

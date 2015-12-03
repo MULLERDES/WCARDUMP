@@ -196,13 +196,7 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>UsersModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>UsersModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspUsers\PartialModels.cs" />
+    <Compile Include="Models\AspNetUser\Partial.cs" />
     <Compile Include="Models\AutoBrand.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
@@ -236,9 +230,6 @@
     </Compile>
     <Compile Include="Models\CarDumpSet\Class1.cs" />
     <Compile Include="Models\CarDump\DomainModels.cs" />
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>UsersModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Home\SearchResultHomeVM.cs" />
     <Compile Include="Models\Home\SearchSetsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -590,14 +581,13 @@
     <Content Include="Views\CreateSets\EditSet.cshtml" />
     <Content Include="Views\CreateSets\EditSetPartial.cshtml" />
     <Content Include="Views\CreateSets\IndexPartial.cshtml" />
-    <Content Include="Views\AspNetUsers\Delete.cshtml" />
-    <Content Include="Views\AspNetUsers\Details.cshtml" />
-    <Content Include="Views\AspNetUsers\Edit.cshtml" />
-    <Content Include="Views\AspNetUsers\Index.cshtml" />
     <Content Include="Views\AdminPanel\CheckUnchecked.cshtml" />
     <Content Include="Views\Home\CompleteSets.cshtml" />
     <Content Include="Views\Home\SearchResultSets.cshtml" />
     <Content Include="Views\Home\SetDetails.cshtml" />
+    <Content Include="Views\AspNetUsers\Details.cshtml" />
+    <Content Include="Views\AspNetUsers\Edit.cshtml" />
+    <Content Include="Views\AspNetUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

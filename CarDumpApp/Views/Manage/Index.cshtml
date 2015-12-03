@@ -3,34 +3,39 @@
     ViewBag.Title = "Управление";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div class="container">
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div >
-    <h4>Изменение параметров учетной записи</h4>
-    <hr />
-    <dl class="dl-horizontal">
-      
-    @*<dt> Имя: </dt>
-        <dd><input type="text" class="form-control" id="usr"> </dd>
-    <dt>E-mail</dt>
-        <dd><input type="email" class="form-control" id="email"></dd>
-    <dt>Телефон</dt>
-        <dd><input type="text" class="form-control" id="phon"></dd><dt>Пароль:</dt>*@
-<dd>
-    [
-    @if(Model.HasPassword)
-    {
-        @Html.ActionLink("Смена пароля", "ChangePassword")
-    }
-    else
-    {
-        @Html.ActionLink("Создать", "SetPassword")
-    }
-    ]
-</dd>
-        <dd> <button type="button" style="background-color:#1a6358;color:white;border-color:#1a6358; margin-top:3px; " class="btn btn-primary btn-md">Save</button></dd>
-    </dl>
-  
+
+
+    <h2>@ViewBag.Title.</h2>
+
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <div>
+        <h4>Изменение параметров учетной записи</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            @*<dt> Имя: </dt>
+                    <dd><input type="text" class="form-control" id="usr"> </dd>
+                <dt>E-mail</dt>
+                    <dd><input type="email" class="form-control" id="email"></dd>
+                <dt>Телефон</dt>
+                    <dd><input type="text" class="form-control" id="phon"></dd><dt>Пароль:</dt>*@
+            <dd>
+                [
+                @if(Model.HasPassword)
+                {
+                    @Html.ActionLink("Смена пароля", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Создать", "SetPassword")
+                }
+                ]
+            </dd>
+            <dd> <button type="button" style="background-color:#1a6358;color:white;border-color:#1a6358; margin-top:3px; " class="btn btn-primary btn-md">Save</button></dd>
+        </dl>
+
+    </div>
+
 </div>
-

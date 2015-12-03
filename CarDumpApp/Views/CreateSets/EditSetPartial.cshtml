@@ -3,14 +3,14 @@
 
 <div id="EditSetPartialView">
 
-    <h4>@Model.CDSet.AutoModel.AutoBrand.Name @Model.CDSet.AutoModel.Name @Model.CDSet.Year  </h4>
+    
     <input type="text" value="@Model.CDSet.Id" id="SID" hidden />
-    <h2>This is list of files in Set</h2>
+    <h3>This is list of files in Set</h3>
 
-    <ul>
+    <ul class="list-group">
         @foreach(var item in Model.CDSet.SetItems)
         {
-            <li>
+            <li class="list-group-item" style="margin:2px;">
                 @Html.ActionLink(item.CarDump.PersonalNumber, "Create", "CreateCarDumpRecord", null, new { id= item.Id }) |
                
                 @item.CarDump.Module.Name |

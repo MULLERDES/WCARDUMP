@@ -13,7 +13,7 @@
             @item.AutoModel.Name
             @item.Year
             @item.Description
-            @Html.ActionLink("Edit", "EditSet", new { @SetItem = item.Id })
+            @Html.ActionLink("Edit", "EditSet", new { @SetItem = item.Id  }, new { @class = "btn btn-info" })
         </li>
     }
 

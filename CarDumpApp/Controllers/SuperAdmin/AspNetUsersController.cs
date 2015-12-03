@@ -8,12 +8,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarDumpApp.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CarDumpApp.Controllers.SuperAdmin
 {
-    public class AspNetUsersController : Controller
+    public class AspNetUsersController :Controller
     {
-        private UsersMDLConnection db = new UsersMDLConnection();
+        private UsersDBEntities db = new UsersDBEntities();
 
         // GET: AspNetUsers
         public async Task<ActionResult> Index()
@@ -24,81 +26,93 @@ namespace CarDumpApp.Controllers.SuperAdmin
         // GET: AspNetUsers/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (id == null)
+            AspNetUserDetailsViewModel mdl = new AspNetUserDetailsViewModel();
+            if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
-            if (aspNetUser == null)
+            mdl.User = await db.AspNetUsers.FindAsync(id);
+            if(mdl.User == null)
             {
                 return HttpNotFound();
             }
-            return View(aspNetUser);
+            mdl.Roles = await db.AspNetRoles.ToListAsync();
+
+            var ctx = new ApplicationDbContext();
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(ctx));
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
+
+            if(userManager.IsInRole(mdl.User.Id, "NetUser"))
+            {
+                mdl.RoleId = RoleManager.FindByName("NetUser")?.Id;
+            }
+            if(userManager.IsInRole(mdl.User.Id, "Admin"))
+            {
+                mdl.RoleId = RoleManager.FindByName("Admin")?.Id;
+            }
+
+
+            return View(mdl);
+        }
+
+        [HttpPost]
+        public void Details(AspNetUserDetailsViewModel mdl)
+        {
+
+            var ctx = new ApplicationDbContext();
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(ctx));
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
+
+
+            //if(userManager.IsInRole(mdl.User.Id, "Admin"))
+            //{
+            //    mdl.RoleId = RoleManager.FindByName("Admin")?.Id;
+            //}
+            //if(userManager.IsInRole(mdl.User.Id, "NetUser"))
+            //{
+            //    mdl.RoleId = RoleManager.FindByName("NetUser")?.Id;
+            //}
+
+
+            var role = RoleManager.FindById(mdl.RoleId);
+            var roles = RoleManager.Roles.ToList();
+            foreach(var item in roles)
+            {
+                userManager.RemoveFromRole(mdl.User.Id, item.Name);
+            }
+            userManager.AddToRole(mdl.User.Id, role.Name);
         }
 
         // GET: AspNetUsers/Create
-       
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: AspNetUsers/Create
+        // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
+        // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
+
 
         // GET: AspNetUsers/Edit/5
-        public async Task<ActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aspNetUser);
-        }
+
 
         // POST: AspNetUsers/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(aspNetUser).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(aspNetUser);
-        }
+
 
         // GET: AspNetUsers/Delete/5
-        public async Task<ActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aspNetUser);
-        }
+
 
         // POST: AspNetUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
-        {
-            AspNetUser aspNetUser = await db.AspNetUsers.FindAsync(id);
-            db.AspNetUsers.Remove(aspNetUser);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 db.Dispose();
             }
