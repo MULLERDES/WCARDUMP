@@ -5,14 +5,23 @@
 
 
 <div class="container">
-   
+
+    @using(Html.BeginForm("Save", "CreateSet", FormMethod.Post))
+    {
+        <label>Short description about set </label>
+        @Html.EditorFor(model => model.CDSet.Description)
+
+        <button name="action" value="Save">Save</button>
+        @*<button name="action" value="delete">Удалить</button>*@
+    }
+
 
 
     <div class="row">
         @Html.Partial("EditSetPartial", Model)
 
     </div>
-       
+
     <div class="row">
 
     </div>
@@ -26,7 +35,7 @@
                 year = Model?.CDSet?.Year
             });}
     </div>
-    
+
 
 </div>
 
@@ -37,7 +46,7 @@
 @section scripts{
 
     <script type="text/javascript">
-     
+
 
         $(".trline").click(function () {
             var id = $("#SID").val();
@@ -47,13 +56,13 @@
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("EditSet")/?SetItem='+id+'&cditem='+cardumpid+'&saction='+act,
+                url: '@Url.Action("EditSet")/?SetItem=' + id + '&cditem=' + cardumpid + '&saction=' + act,
                 success: function (data) {
                     $('#EditSetPartialView').replaceWith(data);
 
                     $(".rembtn").click(initDel);
 
-                   }
+                }
                ,
                 error: function (xhr, status, p3) {
                     alert(xhr.responseText);
@@ -63,17 +72,17 @@
 
         });
 
-        
+
         function initDel() {
             var id = $("#SID").val();
             var cdid = $(this).attr("cdid");
             var act = "rem";
-          //  alert(cdid+" "+id);
+            //  alert(cdid+" "+id);
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("EditSet")/?SetItem=' + id + '&cditem=' + cdid + '&saction=' + act,
                 success: function (data) {
- 
+
                     $('#EditSetPartialView').replaceWith(data);
                     $(".rembtn").click(initDel);
                 }
@@ -85,7 +94,7 @@
 
         }
         $(".rembtn").click(initDel);
-        
+
     </script>
 
 }

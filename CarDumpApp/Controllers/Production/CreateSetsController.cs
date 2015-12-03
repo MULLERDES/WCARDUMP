@@ -31,6 +31,7 @@ namespace CarDumpApp.Controllers.Production
             //welcome screen
             return View();
         }
+        //[HttpPost]
 
         [HttpPost]
         public int Create(int cardumpitem)

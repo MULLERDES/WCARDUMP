@@ -251,7 +251,7 @@ namespace CarDumpApp.Controllers
 
         //partial view result
 
-        [HttpGet]
+    
         public int NumerOfAllCarDumps()
         {
             //select COUNT(*) from CarDumps
