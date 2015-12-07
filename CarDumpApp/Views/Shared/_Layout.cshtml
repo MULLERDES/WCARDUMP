@@ -7,7 +7,7 @@
     <title>@ViewBag.Title - masterdump.com</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse" style="background-color: rgba(34, 34, 34, 0.26);  border:none;">
@@ -40,10 +40,10 @@
                     <h1>
                         @Html.ActionLink("MASTERDUMP", "Index", "Home", new { area = "" }, new { style = "font-weight: bold; color:#ffffff; font-family: times; " })
                     </h1>
-                    
+
                 </div>
                 <div class="col-sm-6  ">
-                  
+
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                 Airbag, Dash, ECU, SRS, etc. Repair Information Database. EEPROM, FLASH files database (@{Html.RenderAction("NumerOfAllCarDumps", "Home"); } files ready)
                 @*Сотки полезных прошивок, дампов, eeprom, flash, полезные выкладки для мастеров автомобильной электроники*@
             </p>
-           
+
 
 
 
@@ -72,6 +72,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+    <script src="~/Scripts/sweetalert.min.js"></script>
+
+    @*<script type="text/javascript">
+        $(function () {
+            swal({ title: "Error!", text: "Here's my error message!", type: "error", confirmButtonText: "Cool" });
+        });
+    </script>*@
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

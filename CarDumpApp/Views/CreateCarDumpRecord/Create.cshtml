@@ -194,8 +194,24 @@
                 $('#mValidationErrors').modal('show');
             }
             else {
-                $("#WaitDialog").modal('show');
-                $('#FORM1').submit();
+                //$("#WaitDialog").modal('show');
+              
+                swal({
+                    title: "Are you sure?",
+                    text: "This action will change you data!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, save it!",
+                    closeOnConfirm: false
+                },
+                function () {
+                    swal("Savvin in pogress!", "on success page will redirect", "success");
+                    $('#FORM1').submit();
+                });
+
+
+              
             }
         }
 
