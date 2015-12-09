@@ -24,7 +24,7 @@ namespace CarDumpApp.Controllers.Production
         //    ViewBag.AccessLevelID = new SelectList(db.CarDumpAccessLevels, "Id", "Name");
         //    return View();
         //}
-        public ActionResult Create(int?  id)
+        public ActionResult Create(int? id)
         {
             ViewBag.AccessLevelID = new SelectList(db.CarDumpAccessLevels, "Id", "Name");
 
@@ -41,7 +41,7 @@ namespace CarDumpApp.Controllers.Production
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CarDump _CarDump,string file1, string img1,string img2,string img3)
+        public ActionResult Create(CarDump _CarDump, string file1, string img1, string img2, string img3)
         {
             // ищем файлы и назначаем владельца
             int automodelid = Request["DDListAutoModel"].ToInt();
@@ -50,8 +50,8 @@ namespace CarDumpApp.Controllers.Production
             _CarDump.AutoModelId = automodelid;
             _CarDump.ModuleID = moduleid;
             _CarDump.MemoryTypeID = memoryid;
-            _CarDump.Pic1Url = img1;
-            _CarDump.Pic2Url = img2;
+            _CarDump.Pic1Url = img1 == string.Empty ? "no_photo.jpg" : img1;
+            _CarDump.Pic2Url = img2 == string.Empty ? "no_photo.jpg" : img2;
             _CarDump.PostedUserID = User.Identity.GetUserId();
             _CarDump.CreatedDate = DateTime.Now;
             if(_CarDump.Id == 0)
@@ -74,14 +74,14 @@ namespace CarDumpApp.Controllers.Production
                     db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
- 
+
             }
 
 
 
 
-            return RedirectToAction("Index","AdminPanel");
-          
+            return RedirectToAction("Index", "AdminPanel");
+
         }
 
 
@@ -94,7 +94,7 @@ namespace CarDumpApp.Controllers.Production
                 var upload = Request.Files[file];
                 if(upload != null)
                 {
-                    
+
                     // получаем имя файла
                     string fileName = System.IO.Path.GetFileName(upload.FileName);
 
@@ -111,7 +111,7 @@ namespace CarDumpApp.Controllers.Production
 
                     return sf.Id.ToString();
 
-                   
+
                 }
             }
             return "-1";
@@ -135,7 +135,7 @@ namespace CarDumpApp.Controllers.Production
                     {
                         Image imgsource = Image.FromStream(upload.InputStream); /*Image.FromStreamFromFile(openFileDialog.FileName);*/
                         imgsource = Resize(imgsource, 500, 350);
-                        Image wm = Resize(Image.FromFile(Server.MapPath("~/")+"wm.png"), 500, 350);
+                        Image wm = Resize(Image.FromFile(Server.MapPath("~/") + "wm.png"), 500, 350);
                         using(var gr = Graphics.FromImage(imgsource))
                         {
                             gr.DrawImage(wm, PointF.Empty);
