@@ -292,6 +292,7 @@
     <Content Include="Images\Home\glavnayPhon.jpg" />
     <Content Include="Images\Home\glavnayPhon.png" />
     <Content Include="Images\Home\images.jpg" />
+    <Content Include="UploadFilesPics\no_photo.jpg" />
     <Content Include="Images\Home\phon1.jpg" />
     <Content Include="Images\Home\phon3.jpg" />
     <Content Include="Images\Home\phon4.jpg" />
