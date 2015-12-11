@@ -1,7 +1,5 @@
 ﻿@model CarDumpApp.Models.CarDump
-
-<div class="container">
-
+<div class="container>
     @{Html.RenderAction("FullMenu", "AdminPanel", null);}
     <h4>Create new </h4>
     @Html.HiddenFor(model => model.Id)
@@ -96,11 +94,9 @@
             <div class="col-sm-4">
                 <input type="file" class="pupl" fimg="img2" tagimg="imgpic2" />
                 <input id="img2" type="text" name="img2" value="@Model.Pic2Url" hidden />
-              
             </div>
             <div class=col-sm-6>
                 <img id="imgpic2" class="img-thumbnail" style="width:330px; " src="/UploadFilesPics/@Model.Pic2Url" />
-
             </div>
         </div>
         <hr />
@@ -116,21 +112,17 @@
         <hr />
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                <input type="button" value="Save record" onclick="SaveClick()" class="btn  btn-block" />
+                <input type="button" style="background-color:#1a6358;color:white" value="Save record" onclick="SaveClick()" class="btn  btn-block" />
             </div>
         </div>
                         }
-
-
     @{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
     @{Html.RenderAction("ModalWindow", "Module"); }
     @{Html.RenderAction("ModalWindow", "MemoryType"); }
     <div>
     </div>
-
     <div class="modal fade" id="mValidationErrors" role="dialog">
         <div class="modal-dialog modal-sm">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,29 +130,24 @@
                     <h4 class="modal-title">Validations error</h4>
                 </div>
                 <div class="modal-body">
-
                     <ul id="mValidationString" style="color:red;"></ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Hide</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="modal fade" id="WaitDialog" role="dialog" style="top:25%;">
         <div class="modal-dialog modal-sm">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Processing...</h4>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
