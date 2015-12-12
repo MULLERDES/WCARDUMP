@@ -34,6 +34,7 @@ namespace CarDumpApp.Models
         public string PostedUserID { get; set; }
         public int AccessLevelID { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public Nullable<int> CarObjectID { get; set; }
     
         public virtual AutoModel AutoModel { get; set; }
         public virtual MemoryType MemoryType { get; set; }
@@ -41,5 +42,6 @@ namespace CarDumpApp.Models
         public virtual CarDumpAccessLevel CarDumpAccessLevel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SetItem> SetItems { get; set; }
+        public virtual CarObject CarObject { get; set; }
     }
 }

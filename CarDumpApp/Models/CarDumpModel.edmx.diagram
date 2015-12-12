@@ -4,15 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c20cd4b367b94ae2a51370a5cf3bc1e1" Name="Diagram1">
+      <Diagram DiagramId="c20cd4b367b94ae2a51370a5cf3bc1e1" Name="Diagram1" ZoomLevel="100">
         <EntityTypeShape EntityType="CarDumpDatabaseModel.AutoBrand" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDumpDatabaseModel.AutoModel" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDumpDatabaseModel.CarDump" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDumpDatabaseModel.MemoryType" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDumpDatabaseModel.Module" Width="1.5" PointX="7.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.Module" Width="1.5" PointX="7.375" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_AutoModels_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToAutoModel" ManuallyRouted="false" />
-        <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToMemoryType" ManuallyRouted="false" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToMemoryType" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.5" PointY="5.2737532552083328" />
+          <ConnectorPoint PointX="5.25" PointY="5.2737532552083328" />
+        </AssociationConnector>
         <AssociationConnector Association="CarDumpDatabaseModel.FK_T_ToModule" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CarDumpDatabaseModel.StoredFile" Width="1.5" PointX="0.5" PointY="5.375" />
         <EntityTypeShape EntityType="CarDumpDatabaseModel.CarDumpAccessLevel" Width="1.5" PointX="7.375" PointY="0.875" />
@@ -22,6 +25,16 @@
         <AssociationConnector Association="CarDumpDatabaseModel.FK_CarDumpSets_ToModels" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_SetItems_ToCarDumps" />
         <AssociationConnector Association="CarDumpDatabaseModel.FK_SetItems_ToSets" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.CarObject" Width="1.5" PointX="10.125" PointY="1.375" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.FuelType" Width="1.5" PointX="13.875" PointY="4.375" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.MetricType" Width="1.5" PointX="13.875" PointY="2.5" />
+        <EntityTypeShape EntityType="CarDumpDatabaseModel.TransmissionType" Width="1.5" PointX="12.625" PointY="0.5" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_CarObjects_ToAutomodel" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_CarObjects_ToFuelTypes" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_CarObjects_ToMetricTypes" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_CarObjects_ToTransmissiomTypes" />
+        <AssociationConnector Association="CarDumpDatabaseModel.FK_CarDumps_ToCarObjects" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

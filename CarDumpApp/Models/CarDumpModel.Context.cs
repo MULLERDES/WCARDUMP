@@ -34,5 +34,9 @@ namespace CarDumpApp.Models
         public virtual DbSet<CarDumpAccessLevel> CarDumpAccessLevels { get; set; }
         public virtual DbSet<CarDumpSet> CarDumpSets { get; set; }
         public virtual DbSet<SetItem> SetItems { get; set; }
+        public virtual DbSet<CarObject> CarObjects { get; set; }
+        public virtual DbSet<FuelType> FuelTypes { get; set; }
+        public virtual DbSet<MetricType> MetricTypes { get; set; }
+        public virtual DbSet<TransmissionType> TransmissionTypes { get; set; }
     }
 }

@@ -184,6 +184,7 @@
     <Compile Include="Controllers\SuperAdmin\AspNetUsersController.cs" />
     <Compile Include="Controllers\SuperAdmin\AutoBrandsAdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\AutoModelsAdminController.cs" />
+    <Compile Include="Controllers\SuperAdmin\CarObjectsManageController.cs" />
     <Compile Include="Controllers\SuperAdmin\MemoryTypesAdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\ModulesAdminController.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,11 +231,21 @@
     </Compile>
     <Compile Include="Models\CarDumpSet\Class1.cs" />
     <Compile Include="Models\CarDump\DomainModels.cs" />
+    <Compile Include="Models\CarObject.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarObjects\CarObjectsCreateViewModel.cs" />
+    <Compile Include="Models\FuelType.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Home\SearchResultHomeVM.cs" />
     <Compile Include="Models\Home\SearchSetsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MemoryType.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MetricType.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Module.cs">
@@ -244,6 +255,9 @@
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StoredFile.cs">
+      <DependentUpon>CarDumpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransmissionType.cs">
       <DependentUpon>CarDumpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersModel.Context.cs">
@@ -544,6 +558,8 @@
     <Content Include="Views\AspNetUsers\Details.cshtml" />
     <Content Include="Views\AspNetUsers\Edit.cshtml" />
     <Content Include="Views\AspNetUsers\Index.cshtml" />
+    <Content Include="Views\CarObjectsManage\Edit.cshtml" />
+    <Content Include="Views\CarObjectsManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -19,6 +19,7 @@ namespace CarDumpApp.Models
         {
             this.CarDumps = new HashSet<CarDump>();
             this.CarDumpSets = new HashSet<CarDumpSet>();
+            this.CarObjects = new HashSet<CarObject>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace CarDumpApp.Models
         public virtual ICollection<CarDump> CarDumps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CarDumpSet> CarDumpSets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CarObject> CarObjects { get; set; }
     }
 }

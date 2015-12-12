@@ -45,6 +45,7 @@
           <Property Name="PostedUserID" Type="nvarchar" MaxLength="128" />
           <Property Name="AccessLevelID" Type="int" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CarObjectID" Type="int" />
         </EntityType>
         <EntityType Name="CarDumpSets">
           <Key>
@@ -57,7 +58,36 @@
           <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="PostedUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="CarObjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AutoModelID" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="TransmissionID" Type="int" Nullable="false" />
+          <Property Name="Odometr" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Odometr2" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EngineCapacity" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FuelTypeID" Type="int" />
+          <Property Name="MetricID" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FuelTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="MemoryTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetricTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -88,6 +118,13 @@
           <Property Name="OriginalFileName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ParentCarDumpRecordId" Type="int" />
         </EntityType>
+        <EntityType Name="TransmissionTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <Association Name="FK_accesslevel_cd">
           <End Role="CarDumpAccessLevel" Type="Self.CarDumpAccessLevel" Multiplicity="1" />
           <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
@@ -112,6 +149,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CarDumps_ToCarObjects">
+          <End Role="CarObjects" Type="Self.CarObjects" Multiplicity="0..1" />
+          <End Role="CarDumps" Type="Self.CarDumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarObjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDumps">
+              <PropertyRef Name="CarObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CarDumpSets_ToModels">
           <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="1" />
           <End Role="CarDumpSets" Type="Self.CarDumpSets" Multiplicity="*" />
@@ -121,6 +170,54 @@
             </Principal>
             <Dependent Role="CarDumpSets">
               <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToAutomodel">
+          <End Role="AutoModels" Type="Self.AutoModels" Multiplicity="1" />
+          <End Role="CarObjects" Type="Self.CarObjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObjects">
+              <PropertyRef Name="AutoModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToFuelTypes">
+          <End Role="FuelTypes" Type="Self.FuelTypes" Multiplicity="0..1" />
+          <End Role="CarObjects" Type="Self.CarObjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObjects">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToMetricTypes">
+          <End Role="MetricTypes" Type="Self.MetricTypes" Multiplicity="0..1" />
+          <End Role="CarObjects" Type="Self.CarObjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObjects">
+              <PropertyRef Name="MetricID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToTransmissiomTypes">
+          <End Role="TransmissionTypes" Type="Self.TransmissionTypes" Multiplicity="1" />
+          <End Role="CarObjects" Type="Self.CarObjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransmissionTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObjects">
+              <PropertyRef Name="TransmissionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -190,10 +287,14 @@
           <EntitySet Name="CarDumpAccessLevel" EntityType="Self.CarDumpAccessLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDumps" EntityType="Self.CarDumps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDumpSets" EntityType="Self.CarDumpSets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarObjects" EntityType="Self.CarObjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FuelTypes" EntityType="Self.FuelTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemoryTypes" EntityType="Self.MemoryTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetricTypes" EntityType="Self.MetricTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SetItems" EntityType="Self.SetItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StoredFiles" EntityType="Self.StoredFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransmissionTypes" EntityType="Self.TransmissionTypes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_accesslevel_cd" Association="Self.FK_accesslevel_cd">
             <End Role="CarDumpAccessLevel" EntitySet="CarDumpAccessLevel" />
             <End Role="CarDumps" EntitySet="CarDumps" />
@@ -202,9 +303,29 @@
             <End Role="AutoBrands" EntitySet="AutoBrands" />
             <End Role="AutoModels" EntitySet="AutoModels" />
           </AssociationSet>
+          <AssociationSet Name="FK_CarDumps_ToCarObjects" Association="Self.FK_CarDumps_ToCarObjects">
+            <End Role="CarObjects" EntitySet="CarObjects" />
+            <End Role="CarDumps" EntitySet="CarDumps" />
+          </AssociationSet>
           <AssociationSet Name="FK_CarDumpSets_ToModels" Association="Self.FK_CarDumpSets_ToModels">
             <End Role="AutoModels" EntitySet="AutoModels" />
             <End Role="CarDumpSets" EntitySet="CarDumpSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToAutomodel" Association="Self.FK_CarObjects_ToAutomodel">
+            <End Role="AutoModels" EntitySet="AutoModels" />
+            <End Role="CarObjects" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToFuelTypes" Association="Self.FK_CarObjects_ToFuelTypes">
+            <End Role="FuelTypes" EntitySet="FuelTypes" />
+            <End Role="CarObjects" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToMetricTypes" Association="Self.FK_CarObjects_ToMetricTypes">
+            <End Role="MetricTypes" EntitySet="MetricTypes" />
+            <End Role="CarObjects" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToTransmissiomTypes" Association="Self.FK_CarObjects_ToTransmissiomTypes">
+            <End Role="TransmissionTypes" EntitySet="TransmissionTypes" />
+            <End Role="CarObjects" EntitySet="CarObjects" />
           </AssociationSet>
           <AssociationSet Name="FK_SetItems_ToCarDumps" Association="Self.FK_SetItems_ToCarDumps">
             <End Role="CarDumps" EntitySet="CarDumps" />
@@ -249,6 +370,7 @@
           <NavigationProperty Name="AutoBrand" Relationship="Self.FK_AutoModels_ToTable" FromRole="AutoModels" ToRole="AutoBrands" />
           <NavigationProperty Name="CarDumps" Relationship="Self.FK_T_ToAutoModel" FromRole="AutoModels" ToRole="CarDumps" />
           <NavigationProperty Name="CarDumpSets" Relationship="CarDumpDatabaseModel.FK_CarDumpSets_ToModels" FromRole="AutoModel" ToRole="CarDumpSet" />
+          <NavigationProperty Name="CarObjects" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToAutomodel" FromRole="AutoModel" ToRole="CarObject" />
         </EntityType>
         <EntityType Name="CarDump">
           <Key>
@@ -273,6 +395,8 @@
           <NavigationProperty Name="CarDumpAccessLevel" Relationship="CarDumpDatabaseModel.FK_accesslevel_cd" FromRole="CarDump" ToRole="CarDumpAccessLevel" />
           <NavigationProperty Name="SetItems" Relationship="CarDumpDatabaseModel.FK_SetItems_ToCarDumps" FromRole="CarDump" ToRole="SetItem" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CarObjectID" Type="Int32" />
+          <NavigationProperty Name="CarObject" Relationship="CarDumpDatabaseModel.FK_CarDumps_ToCarObjects" FromRole="CarDump" ToRole="CarObject" />
         </EntityType>
         <EntityType Name="MemoryType">
           <Key>
@@ -380,6 +504,30 @@
             <End Role="CarDumpSet" EntitySet="CarDumpSets" />
             <End Role="SetItem" EntitySet="SetItems" />
           </AssociationSet>
+          <EntitySet Name="CarObjects" EntityType="CarDumpDatabaseModel.CarObject" />
+          <EntitySet Name="FuelTypes" EntityType="CarDumpDatabaseModel.FuelType" />
+          <EntitySet Name="MetricTypes" EntityType="CarDumpDatabaseModel.MetricType" />
+          <EntitySet Name="TransmissionTypes" EntityType="CarDumpDatabaseModel.TransmissionType" />
+          <AssociationSet Name="FK_CarObjects_ToAutomodel" Association="CarDumpDatabaseModel.FK_CarObjects_ToAutomodel">
+            <End Role="AutoModel" EntitySet="AutoModels" />
+            <End Role="CarObject" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToFuelTypes" Association="CarDumpDatabaseModel.FK_CarObjects_ToFuelTypes">
+            <End Role="FuelType" EntitySet="FuelTypes" />
+            <End Role="CarObject" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToMetricTypes" Association="CarDumpDatabaseModel.FK_CarObjects_ToMetricTypes">
+            <End Role="MetricType" EntitySet="MetricTypes" />
+            <End Role="CarObject" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarObjects_ToTransmissiomTypes" Association="CarDumpDatabaseModel.FK_CarObjects_ToTransmissiomTypes">
+            <End Role="TransmissionType" EntitySet="TransmissionTypes" />
+            <End Role="CarObject" EntitySet="CarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarDumps_ToCarObjects" Association="CarDumpDatabaseModel.FK_CarDumps_ToCarObjects">
+            <End Role="CarObject" EntitySet="CarObjects" />
+            <End Role="CarDump" EntitySet="CarDumps" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StoredFile">
           <Key>
@@ -469,6 +617,110 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CarObject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AutoModelID" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="TransmissionID" Type="Int32" Nullable="false" />
+          <Property Name="Odometr" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Odometr2" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EngineCapacity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FuelTypeID" Type="Int32" />
+          <Property Name="MetricID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AutoModel" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToAutomodel" FromRole="CarObject" ToRole="AutoModel" />
+          <NavigationProperty Name="FuelType" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToFuelTypes" FromRole="CarObject" ToRole="FuelType" />
+          <NavigationProperty Name="MetricType" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToMetricTypes" FromRole="CarObject" ToRole="MetricType" />
+          <NavigationProperty Name="TransmissionType" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToTransmissiomTypes" FromRole="CarObject" ToRole="TransmissionType" />
+          <NavigationProperty Name="CarDumps" Relationship="CarDumpDatabaseModel.FK_CarDumps_ToCarObjects" FromRole="CarObject" ToRole="CarDump" />
+        </EntityType>
+        <EntityType Name="FuelType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarObjects" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToFuelTypes" FromRole="FuelType" ToRole="CarObject" />
+        </EntityType>
+        <EntityType Name="MetricType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarObjects" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToMetricTypes" FromRole="MetricType" ToRole="CarObject" />
+        </EntityType>
+        <EntityType Name="TransmissionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarObjects" Relationship="CarDumpDatabaseModel.FK_CarObjects_ToTransmissiomTypes" FromRole="TransmissionType" ToRole="CarObject" />
+        </EntityType>
+        <Association Name="FK_CarObjects_ToAutomodel">
+          <End Type="CarDumpDatabaseModel.AutoModel" Role="AutoModel" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.CarObject" Role="CarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObject">
+              <PropertyRef Name="AutoModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToFuelTypes">
+          <End Type="CarDumpDatabaseModel.FuelType" Role="FuelType" Multiplicity="0..1" />
+          <End Type="CarDumpDatabaseModel.CarObject" Role="CarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObject">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToMetricTypes">
+          <End Type="CarDumpDatabaseModel.MetricType" Role="MetricType" Multiplicity="0..1" />
+          <End Type="CarDumpDatabaseModel.CarObject" Role="CarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObject">
+              <PropertyRef Name="MetricID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarObjects_ToTransmissiomTypes">
+          <End Type="CarDumpDatabaseModel.TransmissionType" Role="TransmissionType" Multiplicity="1" />
+          <End Type="CarDumpDatabaseModel.CarObject" Role="CarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransmissionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarObject">
+              <PropertyRef Name="TransmissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarDumps_ToCarObjects">
+          <End Type="CarDumpDatabaseModel.CarObject" Role="CarObject" Multiplicity="0..1" />
+          <End Type="CarDumpDatabaseModel.CarDump" Role="CarDump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarObject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDump">
+              <PropertyRef Name="CarObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -495,6 +747,7 @@
           <EntitySetMapping Name="CarDumps">
             <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarDump">
               <MappingFragment StoreEntitySet="CarDumps">
+                <ScalarProperty Name="CarObjectID" ColumnName="CarObjectID" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
                 <ScalarProperty Name="PostedUserID" ColumnName="PostedUserID" />
@@ -563,6 +816,46 @@
               <MappingFragment StoreEntitySet="SetItems">
                 <ScalarProperty Name="CarDumpID" ColumnName="CarDumpID" />
                 <ScalarProperty Name="CarDumpSetID" ColumnName="CarDumpSetID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarObjects">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.CarObject">
+              <MappingFragment StoreEntitySet="CarObjects">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MetricID" ColumnName="MetricID" />
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+                <ScalarProperty Name="EngineCapacity" ColumnName="EngineCapacity" />
+                <ScalarProperty Name="Odometr2" ColumnName="Odometr2" />
+                <ScalarProperty Name="Odometr" ColumnName="Odometr" />
+                <ScalarProperty Name="TransmissionID" ColumnName="TransmissionID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AutoModelID" ColumnName="AutoModelID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FuelTypes">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.FuelType">
+              <MappingFragment StoreEntitySet="FuelTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetricTypes">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.MetricType">
+              <MappingFragment StoreEntitySet="MetricTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransmissionTypes">
+            <EntityTypeMapping TypeName="CarDumpDatabaseModel.TransmissionType">
+              <MappingFragment StoreEntitySet="TransmissionTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

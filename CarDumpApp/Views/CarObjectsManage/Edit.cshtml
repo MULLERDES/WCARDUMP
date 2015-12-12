@@ -1,0 +1,120 @@
+﻿@model CarDumpApp.Models.CarObject
+
+@using (Html.BeginForm("Edit","CarObjectsManage",null,FormMethod.Post, new { @id="CarObjectEditorForm"}))
+{
+        @*@Html.AntiForgeryToken()*@
+
+<div class="form-horizontal">
+    <h4>CarObject</h4>
+    <hr />
+    @ViewBag.Title = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.AutoModelID, "AutoModelID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AutoModelID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AutoModelID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            @Html.DropDownList("TransmissionID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TransmissionID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Odometr, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Odometr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Odometr, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Odometr2, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Odometr2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Odometr2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EngineCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EngineCapacity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EngineCapacity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FuelTypeID, "FuelTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("FuelTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FuelTypeID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MetricID, "MetricID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MetricID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MetricID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+    <input type="submit" value="Sub"/> 
+}
+
+
+
+
+<script type="text/javascript">
+    $("#CarObjectEditorForm").submit(function (e) {
+        e.preventDefault();
+        alert('start submit');
+        var url ='@Url.Action("Edit", "CarObjectsManage")';
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#CarObjectEditorForm").serialize(), // serializes the form's elements.
+            success: function (data) {
+                alert(data); // show response from the php script.
+            }
+            ,
+            error: function (xhr, status, p3) {
+            alert(xhr.responseText);
+        }
+        });
+
+         // avoid to execute the actual submit of the form.
+    });
+</script>
+
+
+
