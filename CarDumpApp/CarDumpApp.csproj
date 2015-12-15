@@ -560,6 +560,7 @@
     <Content Include="Views\AspNetUsers\Index.cshtml" />
     <Content Include="Views\CarObjectsManage\Edit.cshtml" />
     <Content Include="Views\CarObjectsManage\Index.cshtml" />
+    <Content Include="Views\CreateAutoBrand\ModelsByBrandE.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

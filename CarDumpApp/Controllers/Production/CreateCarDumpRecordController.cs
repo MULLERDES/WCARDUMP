@@ -43,11 +43,14 @@ namespace CarDumpApp.Controllers.Production
         [ValidateAntiForgeryToken]
         public ActionResult Create(CarDump _CarDump, string file1, string img1, string img2, string img3)
         {
+            var car = db.CarObjects.Where(tf => tf.Id == _CarDump.CarObjectID).First();
+
+
             // ищем файлы и назначаем владельца
-            int automodelid = Request["DDListAutoModel"].ToInt();
+        //    int automodelid = Request["DDListAutoModel"].ToInt();
             int moduleid = Request["DDListModule"].ToInt();
             int memoryid = Request["DDListMemory"].ToInt();
-            _CarDump.AutoModelId = automodelid;
+            _CarDump.AutoModelId = car.AutoModelID;
             _CarDump.ModuleID = moduleid;
             _CarDump.MemoryTypeID = memoryid;
             _CarDump.Pic1Url = img1 == string.Empty ? "no_photo.jpg" : img1;

@@ -7,7 +7,7 @@ using CarDumpApp.Models;
 
 namespace CarDumpApp.Controllers.Production
 {
-    public class CreateAutoBrandController : Controller
+    public class CreateAutoBrandController :Controller
     {
         CarDumpDatabaseEntities db = new CarDumpDatabaseEntities();
         // GET: CreateAutoBrand
@@ -22,15 +22,15 @@ namespace CarDumpApp.Controllers.Production
             ViewBag.CurrenBrands = new SelectList(db.AutoBrands, "Id", "Name");
             return PartialView();
         }
-               
+
         [HttpPost]
-        public ActionResult ModalWindow(AutoBrand brand,string mm)
+        public ActionResult ModalWindow(AutoBrand brand, string mm)
         {
-            if (brand is AutoBrand)
+            if(brand is AutoBrand)
             {
                 db.AutoBrands.Add(brand);
                 db.SaveChanges();
-               
+
             }
 
             ViewBag.CurrenBrands = new SelectList(db.AutoBrands, "Id", "Name");
@@ -39,11 +39,11 @@ namespace CarDumpApp.Controllers.Production
             return PartialView("DDListAutoBrand");
         }
 
-        public ActionResult DDListAutoBrand(AutoBrand br,AutoModel mdl)
+        public ActionResult DDListAutoBrand(AutoBrand br, AutoModel mdl)
         {
 
-            AutoBrand sel=null;
-            if (mdl is AutoModel)
+            AutoBrand sel = null;
+            if(mdl is AutoModel)
             {
                 sel = mdl.AutoBrand;
             }
@@ -53,17 +53,23 @@ namespace CarDumpApp.Controllers.Production
             if(sel == null)
                 sel = (from c in db.AutoBrands select c).ToList()[0];
 
-            ViewBag.DDListAutoBrand = new SelectList(db.AutoBrands, "Id", "Name",sel?.Id);
-            ViewBag.DDListAutoModel= new SelectList(db.AutoModels.Where(tf=>tf.AutoBrandID==sel.Id), "Id", "Name",mdl?.Id);
+            ViewBag.DDListAutoBrand = new SelectList(db.AutoBrands, "Id", "Name", sel?.Id);
+            ViewBag.DDListAutoModel = new SelectList(db.AutoModels.Where(tf => tf.AutoBrandID == sel.Id), "Id", "Name", mdl?.Id);
             return PartialView();
         }
 
-        
+
 
         public ActionResult ModelsByBrand(int? id)
         {
             ViewBag.DDListAutoModel = new SelectList(db.AutoModels.Where(c => c.AutoBrandID == id), "Id", "Name");
-           
+
+            return PartialView();
+        }
+        public ActionResult ModelsByBrandE(int? id)
+        {
+            ViewBag.AutoModelID = new SelectList(db.AutoModels.Where(c => c.AutoBrandID == id), "Id", "Name");
+
             return PartialView();
         }
 

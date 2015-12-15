@@ -1,38 +1,29 @@
 ﻿@model CarDumpApp.Models.CarDump
-<div class="container>
+<div class="container">
     @{Html.RenderAction("FullMenu", "AdminPanel", null);}
     <h4>Create new </h4>
-    @Html.HiddenFor(model => model.Id)
+
+    <div class="container">
+        <div class="row">
+            @{ Html.RenderAction("Edit","CarObjectsManage",new { @CarObjectID = Model.CarObject?.Id });}
+        </div>
+    </div>
+
     @using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))
     {
         @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.CarObjectID)
+
         <div class="row">
             <div class="col-sm-2">
-                <strong> Brand/Model</strong>
-            </div>
-            <div class="col-sm-4">
-                <div id="ddlist-autobrand">
-                    @{ Html.RenderAction("DDListAutoBrand", "CreateAutoBrand", new { mdl = Model?.AutoModel });}
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <strong > ModuleType </strong>
+                <strong> ModuleType </strong>
                 <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
             </div>
             <div class="col-sm-4">
                 <div id="ddlist-module">
                     @{ Html.RenderAction("DDListModule", "Module", new { mdl = Model?.Module });}
-                </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-sm-2">
-                <strong> Year</strong>
-            </div>
-            <div class="col-sm-4">
-                <div id="ddlist-autobrand">
-                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
             <div class="col-sm-2">
@@ -45,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-sm-2">
                 <strong> File access </strong>
@@ -115,7 +106,8 @@
                 <input type="button" style="background-color:#1a6358;color:white" value="Save record" onclick="SaveClick()" class="btn  btn-block" />
             </div>
         </div>
-                        }
+}
+
     @{Html.RenderAction("ModalWindow", "CreateAutoBrand"); }
     @{Html.RenderAction("ModalWindow", "Module"); }
     @{Html.RenderAction("ModalWindow", "MemoryType"); }
@@ -154,23 +146,31 @@
 
 @section scripts{
     <script type="text/javascript">
+       // alert($('#FORM1  #Description').val());
         function SaveClick() {
 
             var err = true;
             var messArray = [];
-            if ($('#DDListAutoModel').val() == null)
+            ///////////////////
+            //alert($('#CarObjectEditorForm #AutoModelID').val());
+            //return;
+            if ($('#CarObjectEditorForm #AutoModelID').val() <1)
             { messArray.push("Auto model is not selected"); err = false; }
 
-            if (($('#Year').val() < 1980) || ($('#Year').val() > 2020))
+            if (($('#CarObjectEditorForm #Year').val() < 1980) || ($('#CarObjectEditorForm #Year').val() > 2020))
             { messArray.push("Year is not valid"); err = false; }
 
-            if (($('#file1').val().length == 0))
+
+
+
+            /////////////////////////////
+            if (($('#FORM1  #file1').val().length == 0))
             { messArray.push("File not selected"); err = false; }
 
-            if ($('#ModuleNumber').val().length < 3)
+            if ($('#FORM1  #ModuleNumber').val().length < 3)
             { messArray.push("Module number is not entered"); err = false; }
 
-            if ($('#Description').val().length < 3)
+            if ($('#FORM1  #Description').val().length < 3)
             { messArray.push("Description is not entered"); err = false; }
 
             if (err == false) {
@@ -182,7 +182,7 @@
             }
             else {
                 //$("#WaitDialog").modal('show');
-              
+
                 swal({
                     title: "Are you sure?",
                     text: "This action will change you data!",
@@ -193,16 +193,18 @@
                     closeOnConfirm: false
                 },
                 function () {
-                    swal("Savvin in pogress!", "on success page will redirect", "success");
+                    swal("Savin in pogress!", "on success page will redirect", "success");
+                   
+                    $('#FORM1 #CarObjectID').val(CarObjectsSubmt());
                     $('#FORM1').submit();
                 });
 
 
-              
+
             }
         }
 
-        $(function () {
+        @*$(function () {
 
             $('#DDListAutoBrand').change(function () {
                 // получаем выбранный id
@@ -216,9 +218,9 @@
                     }
                 });
             });
-        })
+        })*@
 
-        $('#submit').on('click', function (e) {
+        @*$('#submit').on('click', function (e) {
             e.preventDefault();
             var files = document.getElementById('uploadFile').files;
             if (files.length > 0) {
@@ -244,7 +246,7 @@
                     alert("Браузер не поддерживает загрузку файлов HTML5!");
                 }
             }
-        });
+        });*@
 
         function aupload(_filedata, destinput, acturl) {
             //alert(destinput);
@@ -255,7 +257,6 @@
                 processData: false,
                 data: _filedata,
                 success: function (result) {
-
                     $('#' + destinput).attr('value', result);
                     //alert($('#'+destinput).attr('value'));
                 },
@@ -265,7 +266,7 @@
             });
         }
 
-        function picuoload(_filedata, destinput,destimg, acturl) {
+        function picuoload(_filedata, destinput, destimg, acturl) {
             //alert(destinput);
             $.ajax({
                 type: "POST",
@@ -276,7 +277,7 @@
                 success: function (result) {
 
                     $('#' + destinput).attr('value', result);
-                    $('#' + destimg).attr('src', '/UploadFilesPics/'+result);
+                    $('#' + destimg).attr('src', '/UploadFilesPics/' + result);
                     //alert($('#'+destinput).attr('value'));
                 },
                 error: function (xhr, status, p3) {
