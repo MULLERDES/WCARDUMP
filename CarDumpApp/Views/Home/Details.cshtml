@@ -1,4 +1,5 @@
 ﻿@model CarDumpApp.Models.CarDump
+@using Microsoft.AspNet.Identity
 
 @{
     string sTitle = $"{Model.AutoModel.AutoBrand.Name} {Model.AutoModel.Name} {Model.Year.ToString()} {Model.Module.Name} {Model.MemoryType.Name}";
@@ -6,67 +7,77 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- <div class="container">
-         <h2>@sTitle</h2>  File URL  @Html.ActionLink("Download File", "FileDownload", new { parentid = Model.Id }, null)
-         <hr />
-         <div class="row">
-             <div class="col-sm-6">
-                 <dl class="dl-horizontal">
-                     <dt> Block </dt>
-                           <dd>@Html.DisplayFor(model => model.Module.Name)</dd>
+<div class="container">
+    <h2>@sTitle</h2>  File URL
+    @if(Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Download File", "FileDownload", new { parentid = Model.Id }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Login to get file", "Login","Account", null, null)
+    }
+    
 
-                     <dt>  Memory type  </dt>
-                           <dd> @Html.DisplayFor(model => model.MemoryType.Name)</dd>
+    <hr />
+    <div class="row">
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt> Block </dt>
+                <dd>@Html.DisplayFor(model => model.Module.Name)</dd>
 
-                     <dt>   Part number </dt>
-                           <dd> @Html.DisplayFor(model => model.ModuleNumber) </dd>
-                 
-                     <dt> Status </dt>
-                           <dd>@*проверена / не проверена*@ undefined </dd>
+                <dt>  Memory type  </dt>
+                <dd> @Html.DisplayFor(model => model.MemoryType.Name)</dd>
 
-                     <dt>MetricID</dt>
-                           <dd>Km</dd>
+                <dt>   Part number </dt>
+                <dd> @Html.DisplayFor(model => model.ModuleNumber) </dd>
 
-                     <dt>Description</dt>
-                           <dd>@Html.DisplayFor(model => model.Description)  </dd>
-                 </dl>
-             </div>
+                <dt> Status </dt>
+                <dd>@*проверена / не проверена*@ undefined </dd>
 
-             <div class="col-sm-6">
-                 <dl class="dl-horizontal">
-                     <dt> Transmission</dt>
-                           <dd> Automat </dd>
-                     
-                     <dt>FuelTypeID</dt>
-                           <dd>Gaz </dd>
-                         
-                     <dt>Odometr </dt>
-                          <dd> 162000</dd>
-                        
-                     <dt> Odometr2 </dt>
-                         <dd>100000</dd>
-                         
-                     <dt> EngineCapacity</dt>
-                         <dd> 1600</dd>
-                       
-                     <dt> CarDescription</dt>
-                          <dd> bla bla bla</dd>
-                 </dl>
-             </div>
+                <dt>MetricID</dt>
+                <dd>Km</dd>
 
-         </div>
-        
-     <div class="row">
-         <div class="col-sm-6">
-             <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
-             <p> Label image</p>
-         </div>
-         <div class="col-sm-6">
-             <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
-             <p> Module photo</p>
-         </div>
-     </div> 
+                <dt>Description</dt>
+                <dd>@Html.DisplayFor(model => model.Description)  </dd>
+            </dl>
+        </div>
 
- </div>
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt> Transmission</dt>
+                <dd> @Model.CarObject.TransmissionType.Name </dd>
+
+                <dt>FuelTypeID</dt>
+                <dd>@Model.CarObject.FuelType.Name </dd>
+
+                <dt>Odometr </dt>
+                <dd> @Model.CarObject.Odometr</dd>
+
+                <dt> Odometr2 </dt>
+                <dd>@Model.CarObject.Odometr2</dd>
+
+                <dt> EngineCapacity</dt>
+                <dd> @Model.CarObject.EngineCapacity</dd>
+
+                <dt> CarDescription</dt>
+                <dd>@Model.CarObject.Description</dd>
+            </dl>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
+            <p> Label image</p>
+        </div>
+        <div class="col-sm-6">
+            <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
+            <p> Module photo</p>
+        </div>
+    </div>
+
+</div>
 
 
