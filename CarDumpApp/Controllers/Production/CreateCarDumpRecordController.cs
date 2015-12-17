@@ -51,6 +51,7 @@ namespace CarDumpApp.Controllers.Production
             int moduleid = Request["DDListModule"].ToInt();
             int memoryid = Request["DDListMemory"].ToInt();
             _CarDump.AutoModelId = car.AutoModelID;
+            _CarDump.Year = car.Year;
             _CarDump.ModuleID = moduleid;
             _CarDump.MemoryTypeID = memoryid;
             _CarDump.Pic1Url = img1 == string.Empty ? "no_photo.jpg" : img1;

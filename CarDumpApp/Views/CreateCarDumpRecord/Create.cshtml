@@ -1,70 +1,83 @@
 ﻿@model CarDumpApp.Models.CarDump
 <div class="container">
     @{Html.RenderAction("FullMenu", "AdminPanel", null);}
-    <h4>Create new </h4>
+    @*<h4>Create new </h4>*@
 
     <div class="container">
         <div class="row">
             @{ Html.RenderAction("Edit","CarObjectsManage",new { @CarObjectID = Model.CarObject?.Id });}
         </div>
     </div>
-
     @using(Html.BeginForm("Create", "CreateCarDumpRecord", FormMethod.Post, new { id = "FORM1" }))
     {
         @Html.AntiForgeryToken()
-
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.CarObjectID)
 
-        <div class="row">
-            <div class="col-sm-2">
-                <strong> ModuleType </strong>
-                <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
-            </div>
-            <div class="col-sm-4">
-                <div id="ddlist-module">
-                    @{ Html.RenderAction("DDListModule", "Module", new { mdl = Model?.Module });}
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <strong> MemoryType </strong>
-                <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-memorytype">Добавить если нет </button>
-            </div>
-            <div class="col-sm-4">
-                <div id="ddlist-memorytype">
-                    @{ Html.RenderAction("DDListMemory", "MemoryType", new { memt = Model?.MemoryType });}
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm-4">
+                    <div class="col-sm-5">
+                        <strong> ModuleType </strong>
+                        <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-moduleadd">Добавить если нет </button>
+                   </div>
+                    <div class="col-sm-7">
+                        <div id="ddlist-module">
+                        @{ Html.RenderAction("DDListModule", "Module", new { mdl = Model?.Module });}
+                        </div>
+                   </div>
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-sm-2">
-                <strong> File access </strong>
-                @Html.DropDownList("AccessLevelID", null, htmlAttributes: new { @class = "form-control" })
-            </div>
+        <div class="col-sm-4">
+                <div class="col-sm-5">
+                    <strong> MemoryType </strong>
+                    <button type="button" class="btn btn-info btn-sm" style="background-color:#1a6358;color:white; border-color:#1a6358" data-toggle="modal" data-target="#modal-memorytype">Добавить если нет </button>
+                </div>
+                <div class="col-sm-7">
+                    <div id="ddlist-memorytype">
+                        @{ Html.RenderAction("DDListMemory", "MemoryType", new { memt = Model?.MemoryType });}
+                    </div>
+                </div>
+       </div>
             <div class="col-sm-4">
+                <div class="col-sm-5">
+                    <strong> ModuleNumber</strong>
+                </div>
+                <div class="col-sm-7">
+                    <div id="ddlist-memorytype">
+                        @Html.EditorFor(model => model.ModuleNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+               
+            </div>
+        <hr />
+     
+   <div class="row">
+        <div class="col-sm-2">
+            <strong>  Description </strong>
+       </div>
+          <div class="col-sm-10">
+                @Html.TextAreaFor(model => model.Description, new { cols = 200, @rows = 10, @style = "max-width:98%" })
+          </div>
+  </div>
+       <hr />
+
+   <div class="row">
+       <div class="col-sm-2">
+           <strong> Add dump </strong>
+      </div>
+           <div class="col-sm-4">
                 <input type="file" class="upl" fimg="file1" value="" />
                 <input type="text" id="file1" name="file1" value="@ViewBag.file1" hidden />
             </div>
-            <div class="col-sm-2">
-                <strong> ModuleNumber</strong>
-            </div>
+         <div class="col-sm-2">
+           <strong> File access </strong>
+         </div>
             <div class="col-sm-4">
-                <div id="ddlist-memorytype">
-                    @Html.EditorFor(model => model.ModuleNumber, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                @Html.DropDownList("AccessLevelID", null, htmlAttributes: new { @class = "form-control" })
             </div>
-        </div>
+   </div>
         <hr />
-        <div class="row">
-            <div class="col-sm-2">
-                <strong>  Description </strong>
-            </div>
-            <div class="col-sm-10">
-                @Html.TextAreaFor(model => model.Description, new { cols = 200, @rows = 10, @style = "max-width:98%" })
-            </div>
-        </div>
-        <hr />
+
         <div class="row">
             <div class="col-sm-2">
                 <strong>Label image</strong>
@@ -78,6 +91,7 @@
             </div>
         </div>
         <hr />
+
         <div class="row">
             <div class="col-sm-2">
                 <strong>Module picture</strong>
@@ -88,9 +102,10 @@
             </div>
             <div class=col-sm-6>
                 <img id="imgpic2" class="img-thumbnail" style="width:330px; " src="/UploadFilesPics/@Model.Pic2Url" />
-            </div>
+            </div> 
         </div>
         <hr />
+
         <div class="row" hidden>
             <div class="col-sm-2">
                 <strong> Image 3</strong>
@@ -100,7 +115,7 @@
                 <input id="img3" type="text" name="img3" />
             </div>
         </div>
-        <hr />
+     
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
                 <input type="button" style="background-color:#1a6358;color:white" value="Save record" onclick="SaveClick()" class="btn  btn-block" />
@@ -131,7 +146,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="WaitDialog" role="dialog" style="top:25%;">
+     <div class="modal fade" id="WaitDialog" role="dialog" style="top:25%;">
         <div class="modal-dialog modal-sm">
             <!-- Modal content-->
             <div class="modal-content">
@@ -142,7 +157,7 @@
             </div>
         </div>
     </div>
-</div>
+ </div>
 
 @section scripts{
     <script type="text/javascript">

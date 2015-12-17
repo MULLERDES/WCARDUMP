@@ -6,74 +6,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
  <div class="container">
-     <div>
-         <h2>@sTitle</h2>
+         <h2>@sTitle</h2>  File URL  @Html.ActionLink("Download File", "FileDownload", new { parentid = Model.Id }, null)
          <hr />
-         <dl class="dl-horizontal">
-             <dt>
-                 Block
-             </dt>
+         <div class="row">
+             <div class="col-sm-6">
+                 <dl class="dl-horizontal">
+                     <dt> Block </dt>
+                           <dd>@Html.DisplayFor(model => model.Module.Name)</dd>
 
-             <dd>
-                 @Html.DisplayFor(model => model.Module.Name)
-             </dd>
-             <dt>
-                 Memory type
-             </dt>
+                     <dt>  Memory type  </dt>
+                           <dd> @Html.DisplayFor(model => model.MemoryType.Name)</dd>
 
-             <dd>
-                 @Html.DisplayFor(model => model.MemoryType.Name)
-             </dd>
+                     <dt>   Part number </dt>
+                           <dd> @Html.DisplayFor(model => model.ModuleNumber) </dd>
+                 
+                     <dt> Status </dt>
+                           <dd>@*проверена / не проверена*@ undefined </dd>
 
-             <dt>
-                 Part number
-             </dt>
+                     <dt>MetricID</dt>
+                           <dd>Km</dd>
 
-             <dd>
-                 @Html.DisplayFor(model => model.ModuleNumber)
-             </dd>
-             <dt>
-                 File URL
-             </dt>
+                     <dt>Description</dt>
+                           <dd>@Html.DisplayFor(model => model.Description)  </dd>
+                 </dl>
+             </div>
 
-             <dd>
-                 @Html.ActionLink("Загрузить файл", "FileDownload", new { parentid = Model.Id }, null);
-             </dd>
-             <dt>
-                 Status
-             </dt>
+             <div class="col-sm-6">
+                 <dl class="dl-horizontal">
+                     <dt> Transmission</dt>
+                           <dd> Automat </dd>
+                     
+                     <dt>FuelTypeID</dt>
+                           <dd>Gaz </dd>
+                         
+                     <dt>Odometr </dt>
+                          <dd> 162000</dd>
+                        
+                     <dt> Odometr2 </dt>
+                         <dd>100000</dd>
+                         
+                     <dt> EngineCapacity</dt>
+                         <dd> 1600</dd>
+                       
+                     <dt> CarDescription</dt>
+                          <dd> bla bla bla</dd>
+                 </dl>
+             </div>
 
-             <dd>
-                 @*проверена / не проверена*@ undefined
-             </dd>
-
-             <dt>
-                 Description
-             </dt>
-
-             <dd>
-                 @Html.DisplayFor(model => model.Description)
-             </dd>
-
-         </dl>
-     </div>
-
+         </div>
+        
      <div class="row">
-
          <div class="col-sm-6">
              <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic1Url" />
              <p> Label image</p>
          </div>
-
          <div class="col-sm-6">
              <img class="img-thumbnail" style="width:500px; height:350px" src="/UploadFilesPics/@Model.Pic2Url" />
              <p> Module photo</p>
          </div>
-     </div>
-
-
+     </div> 
 
  </div>
 
