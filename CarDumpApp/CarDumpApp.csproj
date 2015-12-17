@@ -306,6 +306,8 @@
     <Content Include="Images\Home\glavnayPhon.jpg" />
     <Content Include="Images\Home\glavnayPhon.png" />
     <Content Include="Images\Home\images.jpg" />
+    <Content Include="UploadFilesPics\028e901f-943c-4061-853b-9d783c6833f694406044-708a-46d9-8d53-b430d8f3f67c20130515_001.jpg" />
+    <Content Include="UploadFilesPics\5bcfe224-c8df-45dc-b73c-e217c66f18ba9d12b949-8acc-4d1e-89bf-4b7ca26d87f820130515_002.jpg" />
     <Content Include="UploadFilesPics\no_photo.jpg" />
     <Content Include="Images\Home\phon1.jpg" />
     <Content Include="Images\Home\phon3.jpg" />
