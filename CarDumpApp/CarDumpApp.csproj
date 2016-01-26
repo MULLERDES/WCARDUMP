@@ -307,7 +307,35 @@
     <Content Include="Images\Home\glavnayPhon.png" />
     <Content Include="Images\Home\images.jpg" />
     <Content Include="UploadFilesPics\028e901f-943c-4061-853b-9d783c6833f694406044-708a-46d9-8d53-b430d8f3f67c20130515_001.jpg" />
+    <Content Include="UploadFilesPics\08fd4796-e0aa-488a-9201-a07ec256350d20151210_131701.jpg" />
+    <Content Include="UploadFilesPics\0e766e22-2e77-435b-86ee-5243af14add220151216_184938.jpg" />
+    <Content Include="UploadFilesPics\2140255e-57e2-4816-8353-2b7a8f8eeaaf20151210_150214.jpg" />
+    <Content Include="UploadFilesPics\22f84297-5754-4706-8ce8-3dd67a80efbba9065454008.jpg" />
+    <Content Include="UploadFilesPics\2696ac6a-bb01-4797-a036-1d1a8979bae220151217_141440.jpg" />
+    <Content Include="UploadFilesPics\28d902ed-f7f8-4171-a20d-e1c4e1a0d49420151216_141324.jpg" />
+    <Content Include="UploadFilesPics\373bab52-7915-4ca3-a1c0-c1f530a13a8e20151216_121839.jpg" />
+    <Content Include="UploadFilesPics\3f4a5869-c45c-4f79-a526-37e3eb894e6020151210_131701.jpg" />
+    <Content Include="UploadFilesPics\4729065d-8735-4daa-ac3e-3c71aaaa1b0220151218_120617.jpg" />
+    <Content Include="UploadFilesPics\5767af37-8d9f-4cf5-812a-f24a0e45ff8e20151218_120806.jpg" />
     <Content Include="UploadFilesPics\5bcfe224-c8df-45dc-b73c-e217c66f18ba9d12b949-8acc-4d1e-89bf-4b7ca26d87f820130515_002.jpg" />
+    <Content Include="UploadFilesPics\61798d61-7bf7-46a4-989f-a5686a935ec420151214_103732.jpg" />
+    <Content Include="UploadFilesPics\766fc2ef-28b1-4585-ac53-2eb3cabc265920151214_183807.jpg" />
+    <Content Include="UploadFilesPics\84e4927f-1fc9-4a7a-9bd8-19008db7c36920151214_183757.jpg" />
+    <Content Include="UploadFilesPics\8c453912-6e84-4ad3-9228-dbb2482cb14120151216_184948.jpg" />
+    <Content Include="UploadFilesPics\917e9f89-9011-4aa9-ade7-6e33038da7be20151216_121839.jpg" />
+    <Content Include="UploadFilesPics\95f06986-b597-48f6-8d68-8a3236d58c6120151210_150224.jpg" />
+    <Content Include="UploadFilesPics\a1a5da6b-c1c3-4c6f-bb9c-c0393b1d1fb020151216_141313.jpg" />
+    <Content Include="UploadFilesPics\a1dd692f-d029-433f-9891-92913ffb5f5e20151212_160523.jpg" />
+    <Content Include="UploadFilesPics\a93e98e3-f8c7-4012-b6b3-ad6f5ed001fd20151216_115406.jpg" />
+    <Content Include="UploadFilesPics\b33e33f0-b58f-4cf8-890b-bf4822f94b6a20151210_131654.jpg" />
+    <Content Include="UploadFilesPics\bc4ad5b2-1b5d-4b8e-b5bd-25da732358ca20151217_141426.jpg" />
+    <Content Include="UploadFilesPics\c71446e6-0725-40f5-9035-7a346cc4f2e320151212_160511.jpg" />
+    <Content Include="UploadFilesPics\cef9cbd9-cf32-40f7-810b-9472192e7df920151214_103749.jpg" />
+    <Content Include="UploadFilesPics\dc6a17af-a41e-4816-9616-934d942734d020151210_150205.jpg" />
+    <Content Include="UploadFilesPics\e07cbd38-8f1b-403b-8c3a-1bc809147aa620151216_115420.jpg" />
+    <Content Include="UploadFilesPics\e4275123-971a-463b-8f9f-80a013142c2020151210_150157.jpg" />
+    <Content Include="UploadFilesPics\e557c87f-72c4-445a-9d96-74c286bd7b9d20151218_120812.jpg" />
+    <Content Include="UploadFilesPics\e71a4cde-afe2-4c6e-bac9-23bfef94e84420151218_120608.jpg" />
     <Content Include="UploadFilesPics\no_photo.jpg" />
     <Content Include="Images\Home\phon1.jpg" />
     <Content Include="Images\Home\phon3.jpg" />
@@ -453,6 +481,7 @@
       <DependentUpon>UsersModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\111.pubxml" />
+    <None Include="Properties\PublishProfiles\web.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
